@@ -82,6 +82,15 @@ img {
   }
 }
 
+/* Visited link colors by theme */
+body[a="light"] a:visited {
+  color: #dfff00;
+}
+
+body[a="dark"] a:visited {
+  color: #677500;
+}
+
 .home-right {
   padding: 0; /* mobile base */
 }
