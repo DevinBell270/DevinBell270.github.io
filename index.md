@@ -16,3 +16,5 @@ Please see the [About]({{ '/about/' | relative_url }}) page for more information
 {% endfor %}
 </ul>
 <p><a href="{{ '/blog/' | relative_url }}">View more →</a></p>
+
+{% include theme_toggle.html %}

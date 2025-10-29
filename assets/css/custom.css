@@ -15,3 +15,22 @@ img {
   color: #666;
 }
 
+/* Theme toggle styling */
+.theme-toggle {
+  margin-top: 2rem;
+  text-align: left;
+}
+
+.theme-option {
+  cursor: pointer;
+}
+
+.theme-option.active {
+  color: var(--link-color, #0000EE);
+  text-decoration: underline;
+}
+
+.theme-option:hover {
+  opacity: 0.7;
+}
+

@@ -1,0 +1,32 @@
+<div class="theme-toggle">
+  <span id="theme-light" class="theme-option">Light</span> / <span id="theme-dark" class="theme-option">Dark</span>
+</div>
+
+<script>
+  // Get theme from localStorage or default to 'light'
+  const currentTheme = localStorage.getItem('theme') || 'light';
+  document.documentElement.setAttribute('data-theme', currentTheme);
+  
+  // Update active state on page load
+  function updateActiveTheme(theme) {
+    document.getElementById('theme-light').classList.remove('active');
+    document.getElementById('theme-dark').classList.remove('active');
+    document.getElementById('theme-' + theme).classList.add('active');
+  }
+  
+  updateActiveTheme(currentTheme);
+  
+  // Toggle theme on click
+  document.getElementById('theme-light').addEventListener('click', function() {
+    document.documentElement.setAttribute('data-theme', 'light');
+    localStorage.setItem('theme', 'light');
+    updateActiveTheme('light');
+  });
+  
+  document.getElementById('theme-dark').addEventListener('click', function() {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    localStorage.setItem('theme', 'dark');
+    updateActiveTheme('dark');
+  });
+</script>
+
