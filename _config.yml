@@ -13,6 +13,7 @@ description: No social media, just updates for friends and family.
 # These are the pages that will appear in your site's header navigation.
 # The file `index.md` is automatically added as "Home".
 header_pages:
+  - blog.md
   - about.md
   # - projects.md  # Uncomment this if you create a projects.md page
 

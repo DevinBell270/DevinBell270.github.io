@@ -3,6 +3,10 @@
     Home
   {% elsif page.url contains '/about/' %}
     <a href="{{ '/' | relative_url }}">Home</a> / About
+  {% elsif page.url contains '/blog/' and page.layout == 'page' %}
+    <a href="{{ '/' | relative_url }}">Home</a> / Blog
+  {% elsif page.layout == 'post' %}
+    <a href="{{ '/' | relative_url }}">Home</a> / <a href="{{ '/blog/' | relative_url }}">Blog</a> / {{ page.title }}
   {% else %}
     <a href="{{ '/' | relative_url }}">Home</a>
   {% endif %}

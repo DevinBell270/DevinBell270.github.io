@@ -1,0 +1,17 @@
+/* Custom styles for responsive images and post lists */
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.post-list li {
+  margin: 0.5rem 0;
+}
+
+.post-list .desc {
+  margin-top: 0.25rem;
+  font-size: 0.9em;
+  color: #666;
+}
+
