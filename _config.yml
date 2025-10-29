@@ -1,0 +1,26 @@
+# This is the main configuration file for your Jekyll site.
+# It tells GitHub Pages which theme to use and sets site-wide variables.
+
+# --- Theme Setup ---
+# This line is all you need to use the "no-style-please" theme on GitHub Pages.
+remote_theme: riggraz/no-style-please
+
+# --- Site Settings ---
+title: Devin Bell
+description: No social media, just updates for friends and family.
+
+# --- Header Navigation ---
+# These are the pages that will appear in your site's header navigation.
+# The file `index.md` is automatically added as "Home".
+header_pages:
+  - about.md
+  # - projects.md  # Uncomment this if you create a projects.md page
+
+# --- Footer Links ---
+# These are links that will appear in the footer.
+footer_links:
+  - title: GitHub
+    url: https://github.com/DevinBell270
+
+# --- Build Settings ---
+markdown: kramdown
