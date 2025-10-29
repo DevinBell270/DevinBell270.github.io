@@ -3,7 +3,6 @@ layout: home
 ---
 <div class="home-layout">
   <div class="home-left">
-    <h1>Hi, I'm Devin.</h1>
     <img src="{{ '/assets/images/homepage/me.webp' | relative_url }}" alt="Animated image of Devin" class="home-img">
   </div>
 
