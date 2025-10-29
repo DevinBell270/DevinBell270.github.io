@@ -1,0 +1,32 @@
+{% comment %}
+Apply saved theme as early as possible to minimize flash on navigation.
+Relies on localStorage key 'theme' set by `theme_toggle.html`.
+{% endcomment %}
+<script>
+(function() {
+  try {
+    var saved = localStorage.getItem('theme');
+    if (!saved) return;
+
+    function applyTheme() {
+      if (!document.body) return;
+      document.body.setAttribute('a', saved === 'dark' ? 'dark' : 'light');
+    }
+
+    if (document.body) {
+      applyTheme();
+    } else {
+      // Apply as soon as body is available, before full load
+      document.addEventListener('readystatechange', function onReadyStateChange() {
+        if (document.readyState !== 'loading') {
+          applyTheme();
+          document.removeEventListener('readystatechange', onReadyStateChange);
+        }
+      });
+    }
+  } catch (e) {
+    // no-op
+  }
+})();
+</script>
+

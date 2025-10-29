@@ -19,3 +19,5 @@ You won't catch me on Facebook or Instagram, but you can definitely connect with
 - Email: [devin.bell@wku.edu](mailto:devin.bell@wku.edu)
 - GitHub: [DevinBell270](https://github.com/DevinBell270)
 - Disney YouTube: [Bells in Disney](https://www.youtube.com/@bellsindisney)
+
+{% include theme_toggle.html %}

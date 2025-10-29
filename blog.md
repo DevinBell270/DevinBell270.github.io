@@ -18,3 +18,5 @@ permalink: /blog/
 {% endfor %}
 </ul>
 
+{% include theme_toggle.html %}
+
