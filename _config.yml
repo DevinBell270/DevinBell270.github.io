@@ -9,6 +9,11 @@ remote_theme: riggraz/no-style-please
 title: Devin Bell
 description: No social media, just updates for friends and family.
 
+# --- Theme Configuration ---
+# Enable automatic light/dark mode based on user's system preference
+theme_config:
+  appearance: auto
+
 # --- Header Navigation ---
 # These are the pages that will appear in your site's header navigation.
 # The file `index.md` is automatically added as "Home".
