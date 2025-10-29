@@ -1,5 +1,7 @@
 Hi, I'm Devin.
 
+![Animated Image of Devin]({{ 'assets/images/homepage/me.webp' | relative_url }})
+
 I'm no longer active on most social media platforms. I've set up this simple site as a way for friends and family to see what I'm up to and get in touch.
 
 Please see the [About]({{ '/about/' | relative_url }}) page for more information and contact details.
