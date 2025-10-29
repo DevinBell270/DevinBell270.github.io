@@ -3,30 +3,67 @@
 </div>
 
 <script>
-  // Get theme from localStorage or default to 'light'
-  const currentTheme = localStorage.getItem('theme') || 'light';
-  document.documentElement.setAttribute('data-theme', currentTheme);
-  
-  // Update active state on page load
-  function updateActiveTheme(theme) {
-    document.getElementById('theme-light').classList.remove('active');
-    document.getElementById('theme-dark').classList.remove('active');
-    document.getElementById('theme-' + theme).classList.add('active');
-  }
-  
-  updateActiveTheme(currentTheme);
-  
-  // Toggle theme on click
-  document.getElementById('theme-light').addEventListener('click', function() {
-    document.documentElement.setAttribute('data-theme', 'light');
-    localStorage.setItem('theme', 'light');
-    updateActiveTheme('light');
-  });
-  
-  document.getElementById('theme-dark').addEventListener('click', function() {
-    document.documentElement.setAttribute('data-theme', 'dark');
-    localStorage.setItem('theme', 'dark');
-    updateActiveTheme('dark');
-  });
+  (function() {
+    // Get theme from localStorage or default to 'light'
+    const currentTheme = localStorage.getItem('theme') || 'light';
+    
+    // Apply theme immediately by setting attribute on body element
+    // The no-style-please theme uses body[a="dark"] for dark mode
+    if (currentTheme === 'dark') {
+      document.body.setAttribute('a', 'dark');
+    } else {
+      document.body.setAttribute('a', 'light');
+    }
+    
+    // Update active state on page load
+    function updateActiveTheme(theme) {
+      const lightEl = document.getElementById('theme-light');
+      const darkEl = document.getElementById('theme-dark');
+      
+      if (!lightEl || !darkEl) {
+        return;
+      }
+      
+      lightEl.classList.remove('active');
+      darkEl.classList.remove('active');
+      
+      if (theme === 'light') {
+        lightEl.classList.add('active');
+      } else {
+        darkEl.classList.add('active');
+      }
+    }
+    
+    // Wait for DOM to be ready before attaching event listeners
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initToggle);
+    } else {
+      initToggle();
+    }
+    
+    function initToggle() {
+      updateActiveTheme(currentTheme);
+      
+      // Toggle theme on click
+      const lightButton = document.getElementById('theme-light');
+      const darkButton = document.getElementById('theme-dark');
+      
+      if (lightButton) {
+        lightButton.addEventListener('click', function() {
+          document.body.setAttribute('a', 'light');
+          localStorage.setItem('theme', 'light');
+          updateActiveTheme('light');
+        });
+      }
+      
+      if (darkButton) {
+        darkButton.addEventListener('click', function() {
+          document.body.setAttribute('a', 'dark');
+          localStorage.setItem('theme', 'dark');
+          updateActiveTheme('dark');
+        });
+      }
+    }
+  })();
 </script>
 
