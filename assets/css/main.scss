@@ -60,3 +60,11 @@ img {
   margin-right: auto;
 }
 
+
+/* Home page image alignment */
+.home-img {
+  display: block;
+  margin: 0 0 1rem 0; /* left-aligned */
+  margin-right: auto; /* guard against centered parents */
+}
+
