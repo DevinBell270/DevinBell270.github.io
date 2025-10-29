@@ -1,6 +1,24 @@
+---
+---
+@import "{{ site.theme }}";
+
+/* Custom fonts */
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@600&family=Courier+Prime:wght@400;700&display=swap');
 
-/* Custom styles for responsive images and post lists */
+/* Custom overrides */
+body {
+  font-family: 'Courier Prime', Courier, monospace;
+  font-weight: 400;
+}
+
+strong, b {
+  font-weight: 700;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-weight: 600;
+}
 
 img {
   max-width: 100%;
@@ -17,7 +35,6 @@ img {
   color: #666;
 }
 
-/* Theme toggle styling */
 .theme-toggle {
   margin-top: 2rem;
   text-align: left;
@@ -34,20 +51,5 @@ img {
 
 .theme-option:hover {
   opacity: 0.8;
-}
-
-/* Typography */
-body {
-  font-family: 'Courier Prime', Courier, monospace;
-  font-weight: 400;
-}
-
-strong, b {
-  font-weight: 700;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  font-weight: 600;
 }
 
