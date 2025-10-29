@@ -1,0 +1,10 @@
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+  {% if page.url == '/' %}
+    Home
+  {% elsif page.url contains '/about/' %}
+    <a href="{{ '/' | relative_url }}">Home</a> / About
+  {% else %}
+    <a href="{{ '/' | relative_url }}">Home</a>
+  {% endif %}
+</nav>
+

@@ -4,6 +4,8 @@ title: About
 permalink: /about/
 ---
 
+{% include breadcrumbs.html %}
+
 Hey, I'm Devin Bell.
 
 I'm based in south-central Kentucky.

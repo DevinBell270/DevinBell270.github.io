@@ -1,3 +1,5 @@
+{% include breadcrumbs.html %}
+
 Hi, I'm Devin.
 
 Welcome to my personal page.
