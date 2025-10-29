@@ -9,7 +9,7 @@ On May, 9th, Lacey, Ava, and I all took off for Louisville to go to the National
 
 It was a huge event, held at the Kentucky Exposition Center. Ava was competing in the bullseye competition, which meant she was shooting at targets from both 10 meters and 15 meters away.
 
-She did awesome and shot a 200! What was really cool was that shot this using the new bow we bought her at the state championships.
+She did awesome and shot a 200! What was really cool was that she shot this using the new bow we bought her at the state championships.
 
 Her grandparents came up to watch and cheer her on.
 
