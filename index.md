@@ -4,8 +4,7 @@ layout: home
 <div class="home-layout">
   <div class="home-left">
     <h1>Hi, I'm Devin.</h1>
-    
-    ![Animated Image of Devin]({{ 'assets/images/homepage/me.webp' | relative_url }}){: .home-img}
+    <img src="{{ '/assets/images/homepage/me.webp' | relative_url }}" alt="Animated image of Devin" class="home-img">
   </div>
 
   <div class="home-right">
