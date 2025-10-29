@@ -1,4 +1,6 @@
-Hi, I'm Devin.
+---
+layout: home
+---
 
 ![Animated Image of Devin]({{ 'assets/images/homepage/me.webp' | relative_url }}){: .home-img}
 
