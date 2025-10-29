@@ -23,14 +23,14 @@ img {
 
 .theme-option {
   cursor: pointer;
+  text-decoration: none;
 }
 
 .theme-option.active {
-  color: var(--link-color, #0000EE);
   text-decoration: underline;
 }
 
 .theme-option:hover {
-  opacity: 0.7;
+  opacity: 0.8;
 }
 
