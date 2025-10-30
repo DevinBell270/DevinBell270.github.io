@@ -1,0 +1,18 @@
+/vendor/
+/.bundle/
+
+
+# Jekyll build output and caches
+/_site/
+.sass-cache/
+.jekyll-cache/
+.jekyll-metadata
+
+# OS/editor noise
+.DS_Store
+.vscode/
+.idea/
+
+# Optional: JS tooling
+node_modules/
+
