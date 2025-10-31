@@ -9,7 +9,7 @@ layout: home
 
     <h2>Recent posts</h2>
     <ul class="post-list">
-    {% for post in site.posts limit:5 %}
+    {% for post in site.posts limit:3 %}
       <li>
         <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
         <span> — {{ post.date | date: "%b %d, %Y" }}</span>
