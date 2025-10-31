@@ -19,6 +19,15 @@ layout: home
     </ul>
     <p><a href="{{ '/blog/' | relative_url }}">View more →</a></p>
 
+    <h2>Go To Disney With Us</h2>
+    <ul id="yt-video-list" class="post-list"></ul>
+    <p><a href="https://www.youtube.com/@bellsindisney" target="_blank" rel="noopener noreferrer">View more →</a></p>
+    <noscript>
+      <p>Enable JavaScript to see our latest YouTube videos.</p>
+    </noscript>
+
+    <script src="{{ '/assets/js/youtube_feed.js' | relative_url }}" defer></script>
+
     {% include theme_toggle.html %}
   </div>
   <div class="home-right">
