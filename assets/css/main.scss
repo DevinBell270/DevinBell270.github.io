@@ -175,7 +175,7 @@ pre { overflow: auto; padding: 0.75rem; }
 .post-list li {
   margin: 0;
   padding: 1rem 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.16);
 }
 
 .post-list li:last-child {
@@ -184,7 +184,7 @@ pre { overflow: auto; padding: 0.75rem; }
 
 @media (prefers-color-scheme: dark) {
   .post-list li {
-    border-bottom-color: rgba(255, 255, 255, 0.12);
+    border-bottom-color: rgba(255, 255, 255, 0.16);
   }
 }
 
@@ -256,7 +256,7 @@ pre { overflow: auto; padding: 0.75rem; }
 /* Material Design 3 Divider */
 .m3-divider {
   border: none;
-  border-top: 1px solid rgba(0, 0, 0, 0.12);
+  border-top: 1px solid rgba(0, 0, 0, 0.16);
   margin: 2rem 0;
   height: 0;
   width: 100%;
@@ -264,7 +264,7 @@ pre { overflow: auto; padding: 0.75rem; }
 
 @media (prefers-color-scheme: dark) {
   .m3-divider {
-    border-top-color: rgba(255, 255, 255, 0.12);
+    border-top-color: rgba(255, 255, 255, 0.16);
   }
 }
 
