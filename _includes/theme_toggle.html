@@ -1,5 +1,10 @@
 <div class="theme-toggle">
-  <a href="#" id="theme-light" class="theme-option">Light</a> / <a href="#" id="theme-dark" class="theme-option">Dark</a>
+  <label class="mac-toggle" for="darkModeToggle">
+    <div class="mac-switch">
+      <input type="checkbox" id="darkModeToggle">
+      <span class="slider"></span>
+    </div>
+  </label>
 </div>
 
 <script>
@@ -15,26 +20,7 @@
       document.body.setAttribute('a', 'light');
     }
     
-    // Update active state on page load
-    function updateActiveTheme(theme) {
-      const lightEl = document.getElementById('theme-light');
-      const darkEl = document.getElementById('theme-dark');
-      
-      if (!lightEl || !darkEl) {
-        return;
-      }
-      
-      lightEl.classList.remove('active');
-      darkEl.classList.remove('active');
-      
-      if (theme === 'light') {
-        lightEl.classList.add('active');
-      } else {
-        darkEl.classList.add('active');
-      }
-    }
-    
-    // Wait for DOM to be ready before attaching event listeners
+    // Wait for DOM to be ready before initializing toggle
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', initToggle);
     } else {
@@ -42,30 +28,21 @@
     }
     
     function initToggle() {
-      updateActiveTheme(currentTheme);
+      const toggle = document.getElementById('darkModeToggle');
       
-      // Toggle theme on click
-      const lightButton = document.getElementById('theme-light');
-      const darkButton = document.getElementById('theme-dark');
-      
-      if (lightButton) {
-        lightButton.addEventListener('click', function(e) {
-          e.preventDefault();
-          document.body.setAttribute('a', 'light');
-          localStorage.setItem('theme', 'light');
-          updateActiveTheme('light');
-        });
+      if (!toggle) {
+        return;
       }
       
-      if (darkButton) {
-        darkButton.addEventListener('click', function(e) {
-          e.preventDefault();
-          document.body.setAttribute('a', 'dark');
-          localStorage.setItem('theme', 'dark');
-          updateActiveTheme('dark');
-        });
-      }
+      // Set checkbox state based on current theme
+      toggle.checked = currentTheme === 'dark';
+      
+      // Toggle theme on checkbox change
+      toggle.addEventListener('change', function() {
+        const newTheme = this.checked ? 'dark' : 'light';
+        document.body.setAttribute('a', newTheme);
+        localStorage.setItem('theme', newTheme);
+      });
     }
   })();
 </script>
-
