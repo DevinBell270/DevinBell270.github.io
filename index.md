@@ -3,10 +3,6 @@ layout: home
 ---
 <div class="home-layout">
   <div class="home-left">
-    <img src="{{ '/assets/images/homepage/me.webp' | relative_url }}" alt="Animated image of Devin" class="home-img">
-  </div>
-
-  <div class="home-right">
     <p>I'm no longer active on most social media platforms. I've set up this simple site as a way for friends and family to see what I'm up to and get in touch.</p>
 
     <p>Please see the <a href="{{ '/about/' | relative_url }}">About</a> page for more information and contact details.</p>
@@ -24,5 +20,8 @@ layout: home
     <p><a href="{{ '/blog/' | relative_url }}">View more →</a></p>
 
     {% include theme_toggle.html %}
+  </div>
+  <div class="home-right">
+    <img src="{{ '/assets/images/homepage/me.webp' | relative_url }}" alt="Animated image of Devin" class="home-img">
   </div>
 </div>
