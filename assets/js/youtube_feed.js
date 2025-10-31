@@ -3,6 +3,8 @@
   const LIST_ELEMENT_ID = 'yt-video-list';
   const FEED_URL = 'https://www.youtube.com/feeds/videos.xml?channel_id=UCz4_b11cchORwaXPPflRGDg';
   const MAX_ITEMS = 3;
+  const CACHE_KEY = 'yt-feed-cache';
+  const CACHE_TTL = 3600000;
 
   function getText(el) {
     return el ? (el.textContent || '').trim() : '';
@@ -24,9 +26,34 @@
     });
   }
 
+  function getCachedData() {
+    try {
+      const cached = localStorage.getItem(CACHE_KEY);
+      if (!cached) return null;
+      const { data, timestamp } = JSON.parse(cached);
+      const age = Date.now() - timestamp;
+      if (age > CACHE_TTL) return null;
+      return data;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function setCachedData(data) {
+    try {
+      const cacheEntry = {
+        data: data,
+        timestamp: Date.now()
+      };
+      localStorage.setItem(CACHE_KEY, JSON.stringify(cacheEntry));
+    } catch (e) {
+    }
+  }
+
   function renderItems(items) {
     const list = document.getElementById(LIST_ELEMENT_ID);
     if (!list) return;
+    list.innerHTML = '';
     if (!items.length) {
       const li = document.createElement('li');
       li.textContent = 'No videos found.';
@@ -64,14 +91,23 @@
   async function init() {
     const list = document.getElementById(LIST_ELEMENT_ID);
     if (!list) return;
+
+    const cachedItems = getCachedData();
+    if (cachedItems) {
+      renderItems(cachedItems);
+    }
+
     try {
       const xmlText = await fetchWithFallback(FEED_URL);
       const items = parseFeed(xmlText);
+      setCachedData(items);
       renderItems(items);
     } catch (e) {
-      const li = document.createElement('li');
-      li.textContent = 'Unable to load videos at this time.';
-      list.appendChild(li);
+      if (!cachedItems) {
+        const li = document.createElement('li');
+        li.textContent = 'Unable to load videos at this time.';
+        list.appendChild(li);
+      }
       // Optionally log to console for debugging
       // console.error(e);
     }
