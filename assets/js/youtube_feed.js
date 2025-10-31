@@ -2,7 +2,7 @@
 (function () {
   const LIST_ELEMENT_ID = 'yt-video-list';
   const FEED_URL = 'https://www.youtube.com/feeds/videos.xml?channel_id=UCz4_b11cchORwaXPPflRGDg';
-  const MAX_ITEMS = 5;
+  const MAX_ITEMS = 3;
 
   function getText(el) {
     return el ? (el.textContent || '').trim() : '';
