@@ -84,17 +84,13 @@ img {
 
 .home-right {
   padding: 0;
-}
-
-/* Mobile: show image section above text */
-.home-right {
   order: -1;
 }
 
 @media (min-width: 768px) {
   .home-right {
     padding-left: 2rem; /* nice gutter between columns */
-    order: 0; /* reset ordering so text is left, image right */
+    order: 0;
   }
 }
 
