@@ -19,6 +19,8 @@ layout: home
     </ul>
     <p><a href="{{ '/blog/' | relative_url }}">View more →</a></p>
 
+    <hr class="m3-divider">
+
     <h2>Go To Disney With Us</h2>
     <ul id="yt-video-list" class="post-list"></ul>
     <p><a href="https://www.youtube.com/@bellsindisney" target="_blank" rel="noopener noreferrer">View more →</a></p>

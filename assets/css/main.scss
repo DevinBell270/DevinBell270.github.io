@@ -173,7 +173,19 @@ code, pre {
 pre { overflow: auto; padding: 0.75rem; }
 
 .post-list li {
-  margin: 0.5rem 0;
+  margin: 0;
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.post-list li:last-child {
+  border-bottom: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  .post-list li {
+    border-bottom-color: rgba(255, 255, 255, 0.12);
+  }
 }
 
 .post-list .desc {
@@ -238,6 +250,21 @@ pre { overflow: auto; padding: 0.75rem; }
   .home-right {
     padding-left: 2rem; /* nice gutter between columns */
     order: 0;
+  }
+}
+
+/* Material Design 3 Divider */
+.m3-divider {
+  border: none;
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+  margin: 2rem 0;
+  height: 0;
+  width: 100%;
+}
+
+@media (prefers-color-scheme: dark) {
+  .m3-divider {
+    border-top-color: rgba(255, 255, 255, 0.12);
   }
 }
 
