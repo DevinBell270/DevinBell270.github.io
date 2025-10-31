@@ -16,3 +16,5 @@
 # Optional: JS tooling
 node_modules/
 
+# Cursor IDE
+.cursor/commands/

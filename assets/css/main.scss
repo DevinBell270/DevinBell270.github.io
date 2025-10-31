@@ -25,6 +25,153 @@ img {
   height: auto;
 }
 
+/* Material 3-inspired typography scale (preserves existing font families) */
+:root {
+  /* Font weights */
+  --weight-display: 600; /* using existing heading weight */
+  --weight-headline: 600;
+  --weight-title-strong: 500;
+  --weight-body: 400;
+  --weight-label: 500;
+
+  /* Sizes use clamp(min, vw-based, max) for fluid scaling */
+  /* Display */
+  --font-size-display-lg: clamp(2.25rem, 1.2rem + 3.2vw, 3.5625rem); /* 36→57 */
+  --line-height-display-lg: 1.12; /* ~64/57 */
+  --font-size-display-md: clamp(2rem, 1.1rem + 2.4vw, 2.8125rem); /* 32→45 */
+  --line-height-display-md: 1.15; /* ~52/45 */
+  --font-size-display-sm: clamp(1.75rem, 1rem + 2.2vw, 2.25rem); /* 28→36 */
+  --line-height-display-sm: 1.22; /* ~44/36 */
+
+  /* Headline */
+  --font-size-headline-lg: clamp(2rem, 1.1rem + 2.4vw, 2rem); /* fixed 32 */
+  --line-height-headline-lg: 1.25; /* 40/32 */
+  --font-size-headline-md: clamp(1.75rem, 1.05rem + 1.8vw, 1.75rem); /* fixed 28 */
+  --line-height-headline-md: 1.29; /* 36/28 */
+  --font-size-headline-sm: clamp(1.5rem, 1rem + 1.6vw, 1.5rem); /* fixed 24 */
+  --line-height-headline-sm: 1.33; /* 32/24 */
+
+  /* Title */
+  --font-size-title-lg: 1.375rem; /* 22 */
+  --line-height-title-lg: 1.27; /* 28/22 */
+  --font-size-title-md: 1rem; /* 16 */
+  --line-height-title-md: 1.5; /* 24/16 */
+  --font-size-title-sm: 0.875rem; /* 14 */
+  --line-height-title-sm: 1.43; /* 20/14 */
+
+  /* Body */
+  --font-size-body-lg: 1rem; /* 16 */
+  --line-height-body-lg: 1.5; /* 24/16 */
+  --font-size-body-md: 0.875rem; /* 14 */
+  --line-height-body-md: 1.43; /* 20/14 */
+  --font-size-body-sm: 0.75rem; /* 12 */
+  --line-height-body-sm: 1.33; /* 16/12 */
+
+  /* Label */
+  --font-size-label-lg: 0.875rem; /* 14 */
+  --line-height-label-lg: 1.43; /* 20/14 */
+  --font-size-label-md: 0.75rem; /* 12 */
+  --line-height-label-md: 1.33; /* 16/12 */
+  --font-size-label-sm: 0.6875rem; /* 11 */
+  --line-height-label-sm: 1.45; /* ~16/11 */
+
+  /* Readable text measure */
+  --measure: 65ch;
+}
+
+/* Base body type aligns with Material body-large. Avoid very light weights for readability. */
+body {
+  font-size: var(--font-size-body-lg);
+  line-height: var(--line-height-body-lg);
+  letter-spacing: 0; /* keep natural for mono-family */
+}
+
+/* Constrain paragraph and list measure for readability */
+p,
+li,
+blockquote,
+pre,
+code {
+  max-width: var(--measure);
+}
+
+/* Headings mapped to M3 roles while preserving your heading font and weight */
+h1 {
+  font-size: var(--font-size-display-sm);
+  line-height: var(--line-height-display-sm);
+}
+
+h2 {
+  font-size: var(--font-size-headline-lg);
+  line-height: var(--line-height-headline-lg);
+}
+
+h3 {
+  font-size: var(--font-size-headline-md);
+  line-height: var(--line-height-headline-md);
+}
+
+h4 {
+  font-size: var(--font-size-headline-sm);
+  line-height: var(--line-height-headline-sm);
+}
+
+h5 {
+  font-size: var(--font-size-title-lg);
+  line-height: var(--line-height-title-lg);
+  font-weight: var(--weight-title-strong);
+}
+
+h6 {
+  font-size: var(--font-size-title-md);
+  line-height: var(--line-height-title-md);
+  font-weight: var(--weight-title-strong);
+}
+
+/* Secondary text elements */
+small,
+time,
+.breadcrumbs {
+  font-size: var(--font-size-label-md);
+  line-height: var(--line-height-label-md);
+  font-weight: var(--weight-label);
+}
+
+/* Utilities for explicit role-based typography */
+.text-display-lg { font-size: var(--font-size-display-lg); line-height: var(--line-height-display-lg); font-weight: var(--weight-display); }
+.text-display-md { font-size: var(--font-size-display-md); line-height: var(--line-height-display-md); font-weight: var(--weight-display); }
+.text-display-sm { font-size: var(--font-size-display-sm); line-height: var(--line-height-display-sm); font-weight: var(--weight-display); }
+
+.text-headline-lg { font-size: var(--font-size-headline-lg); line-height: var(--line-height-headline-lg); font-weight: var(--weight-headline); }
+.text-headline-md { font-size: var(--font-size-headline-md); line-height: var(--line-height-headline-md); font-weight: var(--weight-headline); }
+.text-headline-sm { font-size: var(--font-size-headline-sm); line-height: var(--line-height-headline-sm); font-weight: var(--weight-headline); }
+
+.text-title-lg { font-size: var(--font-size-title-lg); line-height: var(--line-height-title-lg); font-weight: var(--weight-title-strong); }
+.text-title-md { font-size: var(--font-size-title-md); line-height: var(--line-height-title-md); font-weight: var(--weight-title-strong); }
+.text-title-sm { font-size: var(--font-size-title-sm); line-height: var(--line-height-title-sm); font-weight: var(--weight-title-strong); }
+
+.text-body-lg { font-size: var(--font-size-body-lg); line-height: var(--line-height-body-lg); font-weight: var(--weight-body); }
+.text-body-md { font-size: var(--font-size-body-md); line-height: var(--line-height-body-md); font-weight: var(--weight-body); }
+.text-body-sm { font-size: var(--font-size-body-sm); line-height: var(--line-height-body-sm); font-weight: var(--weight-body); }
+
+.text-label-lg { font-size: var(--font-size-label-lg); line-height: var(--line-height-label-lg); font-weight: var(--weight-label); }
+.text-label-md { font-size: var(--font-size-label-md); line-height: var(--line-height-label-md); font-weight: var(--weight-label); }
+.text-label-sm { font-size: var(--font-size-label-sm); line-height: var(--line-height-label-sm); font-weight: var(--weight-label); }
+
+/* Spacing around headings for vertical rhythm */
+h1, h2, h3, h4, h5, h6 { margin-top: 1.5rem; margin-bottom: 0.5rem; }
+p { margin: 0.75rem 0; }
+ul, ol { padding-left: 1.25rem; margin: 0.75rem 0 0.75rem 1rem; }
+li + li { margin-top: 0.25rem; }
+
+/* Code and preformatted text readability */
+code, pre {
+  font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.9375rem; /* slightly smaller than body-large for density */
+  line-height: 1.5;
+}
+pre { overflow: auto; padding: 0.75rem; }
+
 .post-list li {
   margin: 0.5rem 0;
 }
