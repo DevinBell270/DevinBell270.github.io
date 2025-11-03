@@ -70,6 +70,8 @@ When I'm not at the computer, you'll probably find me doing one of a few things:
         feedback.className = 'form-feedback success';
         form.reset();
       } else {
+        const errorText = await response.text();
+        console.error('Form submission failed:', response.status, errorText);
         throw new Error('Form submission failed');
       }
     } catch (error) {
