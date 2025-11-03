@@ -2,7 +2,7 @@
 layout: post
 title: Ava Goes to Archery Nationals
 date: 2025-05-09
-description: Lacey, Ava, and I all took off for Louisville to go to the National Archery in the Schools Program (NASP®) National competition
+description: National Archery in the Schools Program (NASP®) National competition.
 ---
 
 On May, 9th, Lacey, Ava, and I all took off for Louisville to go to the National Archery in the Schools Program (NASP®) National competition.
