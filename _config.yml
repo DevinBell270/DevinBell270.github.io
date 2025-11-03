@@ -30,7 +30,3 @@ footer_links:
 
 # --- Build Settings ---
 markdown: kramdown
-
-# Note: File watching and auto-reload are enabled automatically when running
-# `jekyll serve`. Use the start-server.sh script or run:
-# bundle exec jekyll serve --livereload
