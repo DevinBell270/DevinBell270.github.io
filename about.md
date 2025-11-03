@@ -12,11 +12,81 @@ I'm based in south-central Kentucky.
 
 When I'm not at the computer, you'll probably find me doing one of a few things: either in the gym working on Olympic Weightlifting or out on the water fishing.
 
+## Get in Touch
+
+<form id="contact-form" action="https://formspree.io/f/xdkprlow" method="POST" class="contact-form">
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input type="text" id="name" name="name" required>
+  </div>
+  
+  <div class="form-group">
+    <label for="subject">Subject</label>
+    <input type="text" id="subject" name="subject" required>
+  </div>
+  
+  <div class="form-group">
+    <label for="message">Message</label>
+    <textarea id="message" name="message" rows="6" required></textarea>
+  </div>
+  
+  <input type="text" name="_gotcha" style="display:none">
+  
+  <button type="submit" class="submit-btn">Send Message</button>
+  
+  <div id="form-feedback" class="form-feedback" role="status" aria-live="polite"></div>
+</form>
+
+<script>
+(function() {
+  const form = document.getElementById('contact-form');
+  const feedback = document.getElementById('form-feedback');
+  
+  if (!form) return;
+  
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const submitBtn = form.querySelector('.submit-btn');
+    const originalText = submitBtn.textContent;
+    
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending...';
+    feedback.textContent = '';
+    feedback.className = 'form-feedback';
+    
+    try {
+      const formData = new FormData(form);
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+      
+      if (response.ok) {
+        feedback.textContent = 'Thanks! Your message has been sent.';
+        feedback.className = 'form-feedback success';
+        form.reset();
+      } else {
+        throw new Error('Form submission failed');
+      }
+    } catch (error) {
+      feedback.textContent = 'Oops! Something went wrong. Please try again.';
+      feedback.className = 'form-feedback error';
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalText;
+    }
+  });
+})();
+</script>
+
 ## Where to find me
 
 You won't catch me on Facebook or Instagram, but you can definitely connect with me in these places:
 
-- Email: [devin.bell@wku.edu](mailto:devin.bell@wku.edu)
 - GitHub: [DevinBell270](https://github.com/DevinBell270)
 - Disney YouTube: [Bells in Disney](https://www.youtube.com/@bellsindisney)
 
