@@ -6,26 +6,6 @@
   const CACHE_KEY = 'yt-feed-cache';
   const CACHE_TTL = 3600000;
 
-  function getText(el) {
-    return el ? (el.textContent || '').trim() : '';
-  }
-
-  function parseFeed(xmlText) {
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(xmlText, 'application/xml');
-    // Handle parsererror
-    if (doc.querySelector('parsererror')) {
-      throw new Error('Failed to parse RSS XML');
-    }
-    const entries = Array.from(doc.getElementsByTagName('entry'));
-    return entries.slice(0, MAX_ITEMS).map((entry) => {
-      const title = getText(entry.getElementsByTagName('title')[0]);
-      const linkEl = entry.getElementsByTagName('link')[0];
-      const href = linkEl ? linkEl.getAttribute('href') : '';
-      return { title, href };
-    });
-  }
-
   function getCachedData() {
     try {
       const cached = localStorage.getItem(CACHE_KEY);
@@ -63,28 +43,69 @@
     for (const item of items) {
       const li = document.createElement('li');
       const a = document.createElement('a');
-      a.href = item.href;
+      a.href = item.link;
       a.rel = 'noopener noreferrer';
       a.target = '_blank';
       a.textContent = item.title || 'View video';
       li.appendChild(a);
-
       list.appendChild(li);
     }
   }
 
-  async function fetchWithFallback(url) {
-    // Try direct fetch first (works if CORS is allowed)
+  async function fetchFeed() {
+    const rss2jsonUrl = 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(FEED_URL);
+    
     try {
-      const res = await fetch(url);
+      const res = await fetch(rss2jsonUrl);
       if (!res.ok) throw new Error('HTTP ' + res.status);
-      return await res.text();
+      const data = await res.json();
+      
+      if (data.status === 'error') {
+        throw new Error(data.message || 'RSS2JSON API error');
+      }
+      
+      if (!data.items || !Array.isArray(data.items)) {
+        throw new Error('Invalid response format');
+      }
+      
+      return data.items.slice(0, MAX_ITEMS).map((item) => ({
+        title: item.title || '',
+        link: item.link || ''
+      }));
     } catch (err) {
-      // Fallback via public CORS proxy
-      const proxied = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(url);
-      const res2 = await fetch(proxied);
-      if (!res2.ok) throw new Error('HTTP ' + res2.status);
-      return await res2.text();
+      const proxies = [
+        'https://api.allorigins.win/raw?url=',
+        'https://corsproxy.io/?'
+      ];
+      
+      for (const proxy of proxies) {
+        try {
+          const proxied = proxy + encodeURIComponent(FEED_URL);
+          const res = await fetch(proxied);
+          if (!res.ok) continue;
+          
+          const xmlText = await res.text();
+          if (!xmlText || !xmlText.includes('<feed')) continue;
+          
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(xmlText, 'application/xml');
+          if (doc.querySelector('parsererror')) continue;
+          
+          const entries = Array.from(doc.getElementsByTagName('entry'));
+          return entries.slice(0, MAX_ITEMS).map((entry) => {
+            const titleEl = entry.getElementsByTagName('title')[0];
+            const linkEl = entry.getElementsByTagName('link')[0];
+            return {
+              title: titleEl ? (titleEl.textContent || '').trim() : '',
+              link: linkEl ? linkEl.getAttribute('href') : ''
+            };
+          });
+        } catch (proxyErr) {
+          continue;
+        }
+      }
+      
+      throw err;
     }
   }
 
@@ -98,8 +119,7 @@
     }
 
     try {
-      const xmlText = await fetchWithFallback(FEED_URL);
-      const items = parseFeed(xmlText);
+      const items = await fetchFeed();
       setCachedData(items);
       renderItems(items);
     } catch (e) {
@@ -108,8 +128,6 @@
         li.textContent = 'Unable to load videos at this time.';
         list.appendChild(li);
       }
-      // Optionally log to console for debugging
-      // console.error(e);
     }
   }
 
@@ -119,5 +137,4 @@
     init();
   }
 })();
-
 
