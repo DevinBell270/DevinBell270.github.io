@@ -1,14 +1,27 @@
+{% comment %}
+  Breadcrumb navigation component
+  Generates breadcrumb trail based on current page type:
+  - Home page: Just "Home"
+  - About page: "Home / About"
+  - Blog listing: "Home / Blog"
+  - Blog post: "Home / Blog / [Post Title]"
+  - Other pages: "Home"
+{% endcomment %}
 <nav class="breadcrumbs" aria-label="Breadcrumb">
   {% if page.url == '/' %}
     Home
-  {% elsif page.url contains '/about/' %}
-    <a href="{{ '/' | relative_url }}">Home</a> / About
-  {% elsif page.url contains '/blog/' and page.layout == 'page' %}
-    <a href="{{ '/' | relative_url }}">Home</a> / Blog
-  {% elsif page.layout == 'post' %}
-    <a href="{{ '/' | relative_url }}">Home</a> / <a href="{{ '/blog/' | relative_url }}">Blog</a> / {{ page.title }}
   {% else %}
     <a href="{{ '/' | relative_url }}">Home</a>
+    {% case page.layout %}
+      {% when 'post' %}
+        / <a href="{{ '/blog/' | relative_url }}">Blog</a> / {{ page.title }}
+      {% when 'page' %}
+        {% if page.url contains '/about/' %}
+          / About
+        {% elsif page.url contains '/blog/' %}
+          / Blog
+        {% endif %}
+    {% endcase %}
   {% endif %}
 </nav>
 

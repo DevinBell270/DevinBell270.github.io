@@ -1,0 +1,109 @@
+/* Typography Styles */
+
+/* Custom fonts */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@600&family=Courier+Prime:wght@400;700&display=swap');
+
+/* Base font families */
+body {
+  font-family: 'Courier Prime', Courier, monospace;
+  font-weight: 400;
+}
+
+strong, b {
+  font-weight: 700;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-weight: 600;
+}
+
+/* Base body type aligns with Material body-large. Avoid very light weights for readability. */
+body {
+  font-size: var(--font-size-body-lg);
+  line-height: var(--line-height-body-lg);
+  letter-spacing: 0; /* keep natural for mono-family */
+}
+
+/* Constrain paragraph and list measure for readability */
+p,
+li,
+blockquote,
+pre,
+code {
+  max-width: var(--measure);
+}
+
+/* Headings mapped to M3 roles while preserving your heading font and weight */
+h1 {
+  font-size: var(--font-size-display-sm);
+  line-height: var(--line-height-display-sm);
+}
+
+h2 {
+  font-size: var(--font-size-headline-lg);
+  line-height: var(--line-height-headline-lg);
+}
+
+h3 {
+  font-size: var(--font-size-headline-md);
+  line-height: var(--line-height-headline-md);
+}
+
+h4 {
+  font-size: var(--font-size-headline-sm);
+  line-height: var(--line-height-headline-sm);
+}
+
+h5 {
+  font-size: var(--font-size-title-lg);
+  line-height: var(--line-height-title-lg);
+  font-weight: var(--weight-title-strong);
+}
+
+h6 {
+  font-size: var(--font-size-title-md);
+  line-height: var(--line-height-title-md);
+  font-weight: var(--weight-title-strong);
+}
+
+/* Secondary text elements */
+small,
+time,
+.breadcrumbs {
+  font-size: var(--font-size-label-md);
+  line-height: var(--line-height-label-md);
+  font-weight: var(--weight-label);
+}
+
+/* Spacing around headings for vertical rhythm */
+h1, h2, h3, h4, h5, h6 { margin-top: 1.5rem; margin-bottom: 0.5rem; }
+p { margin: 0.75rem 0; }
+ul, ol { padding-left: 1.25rem; margin: 0.75rem 0 0.75rem 1rem; }
+li + li { margin-top: 0.25rem; }
+
+/* Code and preformatted text readability */
+code, pre {
+  font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.9375rem; /* slightly smaller than body-large for density */
+  line-height: 1.5;
+}
+pre { overflow: auto; padding: 0.75rem; }
+
+/* Post list typography */
+.post-list li {
+  margin: 0.5rem 0;
+}
+
+.post-list .desc {
+  margin-top: 0.25rem;
+  font-size: 0.9em;
+  color: var(--color-muted);
+}
+
+/* Image defaults */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
