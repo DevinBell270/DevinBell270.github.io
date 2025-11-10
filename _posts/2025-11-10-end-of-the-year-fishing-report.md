@@ -9,7 +9,7 @@ As fall is wrapping up and fishing is slowing down, I'd like to take a second to
 
 This year I spent a lot of time exploring new waterways. I purchased my Tennessee license this year and have fished all around Nashville, Goodlettsville, and Murfreesboro. Along with that, I've explored new areas back in Kentucky along Drakes Creek in Warren and Allen counties and a few streams up in Louisville.
 
-![Close to a 4lb bass caught at Basil Griffin Park on a Wacky Rig.]({{ '/assets/images/2025-11-10-end-of-the-year-fishing-report/fishing-report.webp' | relative_url }})
+Also this year, I introduced some of the homies to fishing, and that's been even more rewarding than catching fish myself.
 
 I also focused a lot on new fishing techniques. The previous year I spent most of my time fishing with hard baits, but this year I really wanted to dial in on using plastics. I've really come to love wacky-rigged worms (Strike King Shimmy Sticks) and Fluke-style soft jerkbaits. This has led to some of the biggest fish I've ever caught and, honestly, just more consistent days of catching fish.
 
@@ -19,7 +19,4 @@ I also focused a lot on new fishing techniques. The previous year I spent most o
 
 ![Ava catching a Bluegill.]({{ '/assets/images/2025-11-10-end-of-the-year-fishing-report/fishing-report-4.webp' | relative_url }})
 
-Also this year, I introduced some of the homies to fishing, and that's been even more rewarding than catching fish myself.
-
 ![Mike's first fishing trip.]({{ '/assets/images/2025-11-10-end-of-the-year-fishing-report/fishing-report-5.webp' | relative_url }})
-
