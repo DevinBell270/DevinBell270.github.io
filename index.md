@@ -34,3 +34,5 @@ layout: home
     <img src="{{ '/assets/images/homepage/me.gif' | relative_url }}" alt="Animated image of Devin" class="home-img">
   </div>
 </div>
+
+<script src="{{ '/assets/js/gif_swap.js' | relative_url }}" defer></script>
