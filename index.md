@@ -31,6 +31,6 @@ layout: home
     {% include theme_toggle.html %}
   </div>
   <div class="home-right">
-    <img src="{{ '/assets/images/homepage/me.webp' | relative_url }}" alt="Animated image of Devin" class="home-img">
+    <img src="{{ '/assets/images/homepage/me.gif' | relative_url }}" alt="Animated image of Devin" class="home-img">
   </div>
 </div>
