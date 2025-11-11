@@ -7,7 +7,7 @@
 
   // Constants
   const HOME_IMG_SELECTOR = '.home-img';
-  const DEFAULT_GIF_DURATION = 11000; // GIF duration in ms (11 seconds)
+  const DEFAULT_GIF_DURATION = 10000; // GIF duration in ms
 
   /**
    * Get static image path from GIF path
