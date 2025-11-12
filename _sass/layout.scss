@@ -5,6 +5,16 @@
   max-width: 1000px;
   margin-left: auto;
   margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+  .w {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
 
 /* Header spacing */
@@ -66,6 +76,51 @@ header {
   gap: 1.5rem;
   position: relative;
   margin-top: 1rem;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* Mobile adjustments for newspaper layout */
+@media (max-width: 767px) {
+  .newspaper-layout {
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .newspaper-content-column {
+    padding: 0;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    max-width: 100%;
+  }
+  
+  .newspaper-content-column article {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    max-width: 100%;
+  }
+  
+  .newspaper-content-column .article-content {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    max-width: 100%;
+  }
+  
+  .newspaper-content-column .article-content p {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    max-width: 100%;
+  }
+  
+  .newspaper-title {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    white-space: normal;
+  }
 }
 
 .newspaper-title-column {
@@ -95,6 +150,30 @@ header {
   width: 100%;
   border: 1px solid #333;
   padding: 20px 10px 50px 10px;
+  box-sizing: border-box;
+  margin-bottom: 1rem;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+@media (max-width: 767px) {
+  .newspaper-image-wrapper {
+    padding: 15px 8px 40px 8px;
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .newspaper-image-wrapper img {
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 0;
+    box-sizing: border-box;
+  }
 }
 
 .newspaper-image-wrapper img {
