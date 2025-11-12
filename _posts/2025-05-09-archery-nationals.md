@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Ava Goes to Archery Nationals
+title: Ava goes to archery nationals.
 date: 2025-05-09
 description: National Archery in the Schools Program (NASP®) National competition.
 ---

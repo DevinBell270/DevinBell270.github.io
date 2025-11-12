@@ -1,6 +1,6 @@
 ---
 layout: post
-title: End of the year fishing report
+title: End of the year fishing report.
 date: 2025-11-10
 description: A recap of the 2025 fishing season, exploring new waterways, mastering soft plastics, and sharing the sport with friends.
 ---
