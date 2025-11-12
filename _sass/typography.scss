@@ -105,5 +105,22 @@ pre { overflow: auto; padding: 0.75rem; }
 img {
   max-width: 100%;
   height: auto;
+  display: block;
+  margin-left: 0;
+  margin-right: auto;
+}
+
+/* Blog post images - left-aligned */
+article img,
+article p img {
+  display: block;
+  margin-left: 0;
+  margin-right: auto;
+  max-width: 100%;
+}
+
+/* Allow images to break out of paragraph max-width constraint */
+article p:has(img) {
+  max-width: none;
 }
 
