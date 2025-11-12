@@ -31,8 +31,8 @@ layout: home
     {% include theme_toggle.html %}
   </div>
   <div class="home-right">
-    <img src="{{ '/assets/images/homepage/me.gif' | relative_url }}" alt="Animated image of Devin" class="home-img">
+    <video class="home-img" muted playsinline alt="Animated image of Devin"></video>
   </div>
 </div>
 
-<script src="{{ '/assets/js/gif_swap.js' | relative_url }}" defer></script>
+<script src="{{ '/assets/js/video_handler.js' | relative_url }}" defer></script>

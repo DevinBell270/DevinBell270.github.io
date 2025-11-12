@@ -90,6 +90,17 @@
   }
 
   /**
+   * Dispatch theme changed event
+   * @param {string} theme - New theme ('light' or 'dark')
+   */
+  function dispatchThemeChanged(theme) {
+    const event = new CustomEvent('themeChanged', {
+      detail: { theme: theme }
+    });
+    window.dispatchEvent(event);
+  }
+
+  /**
    * Handle theme button click
    * @param {string} theme - Theme to switch to ('light' or 'dark')
    * @param {Event} e - Click event
@@ -99,6 +110,7 @@
     applyTheme(theme);
     saveTheme(theme);
     updateActiveTheme(theme);
+    dispatchThemeChanged(theme);
   }
 
   /**

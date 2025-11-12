@@ -7,11 +7,14 @@
   margin-right: auto;
 }
 
-/* Home page image alignment */
+/* Home page image/video alignment */
 .home-img {
   display: block;
   margin: 0 0 1rem 0; /* left-aligned */
   margin-right: auto; /* guard against centered parents */
+  max-width: 100%;
+  width: 100%;
+  height: auto;
   opacity: 0;
   animation: fadeIn 250ms ease-in forwards;
 }
