@@ -4,12 +4,27 @@ layout: default
 
 {% include breadcrumbs.html %}
 
-<article>
-  <h1>{{ page.title }}</h1>
-  <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %d, %Y" }}</time>
+<div class="newspaper-layout">
+  <div class="newspaper-title-column">
+    <h1 class="newspaper-title">{{ page.title }}</h1>
+  </div>
   
-  {{ content }}
-</article>
+  <div class="newspaper-content-column">
+    <article>
+      <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %d, %Y" }}</time>
+      
+      <div class="article-content">
+        {{ content }}
+      </div>
+    </article>
+  </div>
+  
+  <div class="newspaper-images-column">
+    <!-- Images will be populated via JavaScript -->
+  </div>
+</div>
 
 {% include theme_toggle.html %}
+
+<script src="{{ '/assets/js/newspaper_layout.js' | relative_url }}"></script>
 
