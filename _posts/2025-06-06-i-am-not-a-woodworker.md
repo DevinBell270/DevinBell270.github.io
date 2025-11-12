@@ -13,5 +13,3 @@ Over the summer Lacey and I decided to update the house. So I set out to make so
 ![Coffee table build]({{ '/assets/images/2025-06-06-i-am-not-a-woodworker/coffee-table-2.webp' | relative_url }})
 
 ![Coffee table build]({{ '/assets/images/2025-06-06-i-am-not-a-woodworker/coffee-table-3.webp' | relative_url }})
-
-![Coffee table build]({{ '/assets/images/2025-06-06-i-am-not-a-woodworker/coffee-table-4.webp' | relative_url }})
