@@ -37,7 +37,7 @@ header {
 .home-layout {
   display: grid;
   grid-template-columns: 1fr; /* mobile: stack */
-  gap: 1.5rem;
+  gap: .5rem;
 }
 
 @media (min-width: 768px) {
