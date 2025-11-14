@@ -48,6 +48,24 @@
   }
 
   /**
+   * Show container if it has visible media
+   * @param {HTMLElement} container - Container element to potentially show
+   * @param {string} selector - Selector used to identify container type
+   */
+  function showContainerIfNeeded(container, selector) {
+    if (!container) return;
+    
+    if (hasVisibleMedia(container)) {
+      // Restore visibility for newspaper-images-column
+      if (selector === '.newspaper-images-column') {
+        container.style.visibility = '';
+      } else if (container.style.display === 'none') {
+        container.style.display = '';
+      }
+    }
+  }
+
+  /**
    * Hide empty containers
    * @param {HTMLElement} element - Element that was just hidden
    */
@@ -64,7 +82,12 @@
       // Find the container that contains this element
       const container = element.closest(selector);
       if (container && !hasVisibleMedia(container)) {
-        container.style.display = 'none';
+        // Use visibility: hidden for newspaper-images-column to preserve grid layout space
+        if (selector === '.newspaper-images-column') {
+          container.style.visibility = 'hidden';
+        } else {
+          container.style.display = 'none';
+        }
       }
     });
     
@@ -72,10 +95,19 @@
     containerSelectors.forEach(selector => {
       const containers = document.querySelectorAll(selector);
       containers.forEach(container => {
-        // Only check containers that are currently visible
-        if (container.style.display !== 'none' && container.offsetParent !== null) {
+        // Check if container is currently visible
+        const isVisible = selector === '.newspaper-images-column' 
+          ? container.style.visibility !== 'hidden' && container.offsetParent !== null
+          : container.style.display !== 'none' && container.offsetParent !== null;
+        
+        if (isVisible) {
           if (!hasVisibleMedia(container)) {
-            container.style.display = 'none';
+            // Use visibility: hidden for newspaper-images-column to preserve grid layout space
+            if (selector === '.newspaper-images-column') {
+              container.style.visibility = 'hidden';
+            } else {
+              container.style.display = 'none';
+            }
           }
         }
       });
@@ -183,6 +215,15 @@
         parent.appendChild(wrapper);
       }
     });
+    
+    // After wrapping, ensure containers are visible if they have media
+    const containerSelectors = ['.newspaper-images-column', '.home-right'];
+    containerSelectors.forEach(selector => {
+      const containers = document.querySelectorAll(selector);
+      containers.forEach(container => {
+        showContainerIfNeeded(container, selector);
+      });
+    });
   }
 
   /**
@@ -201,6 +242,19 @@
         // Replace wrapper with original element
         wrapper.parentNode.replaceChild(mediaElement, wrapper);
       }
+    });
+    
+    // Restore visibility of containers that might have been hidden
+    const containerSelectors = ['.newspaper-images-column', '.home-right'];
+    containerSelectors.forEach(selector => {
+      const containers = document.querySelectorAll(selector);
+      containers.forEach(container => {
+        if (selector === '.newspaper-images-column') {
+          container.style.visibility = '';
+        } else {
+          container.style.display = '';
+        }
+      });
     });
   }
 
