@@ -9,32 +9,55 @@
   // Constants
   const HOME_VIDEO_SELECTOR = '.home-img';
   const THEME_STORAGE_KEY = 'theme';
+  const THEME_ATTRIBUTE = 'a';
   const THEME_LIGHT = 'light';
   const THEME_DARK = 'dark';
+  const THEME_WAVE = 'wave';
   const VIDEO_BASE_PATH = '/assets/images/homepage/';
   const VIDEO_LIGHT = 'me-light.mp4';
   const VIDEO_DARK = 'me-dark.mp4';
+  const VIDEO_WAVE = 'me-wave.mp4';
 
   /**
-   * Get the current theme from localStorage or return default
-   * @returns {string} Current theme ('light' or 'dark')
+   * Get the current theme from body attribute or localStorage or return default
+   * @returns {string} Current theme ('light', 'dark', or 'wave')
    */
   function getCurrentTheme() {
+    // Check body attribute first (most reliable)
+    if (document.body && document.body.getAttribute(THEME_ATTRIBUTE)) {
+      const theme = document.body.getAttribute(THEME_ATTRIBUTE);
+      if (theme === THEME_DARK || theme === THEME_WAVE || theme === THEME_LIGHT) {
+        return theme;
+      }
+    }
+    
+    // Fallback to localStorage
     try {
-      return localStorage.getItem(THEME_STORAGE_KEY) || THEME_LIGHT;
+      const theme = localStorage.getItem(THEME_STORAGE_KEY);
+      if (theme === THEME_DARK || theme === THEME_WAVE || theme === THEME_LIGHT) {
+        return theme;
+      }
     } catch (e) {
       // localStorage may be unavailable (e.g., private browsing)
-      return THEME_LIGHT;
     }
+    
+    return THEME_LIGHT;
   }
 
   /**
    * Get video path based on theme
-   * @param {string} theme - Theme ('light' or 'dark')
+   * @param {string} theme - Theme ('light', 'dark', or 'wave')
    * @returns {string} Path to video file
    */
   function getVideoPath(theme) {
-    const videoFile = theme === THEME_DARK ? VIDEO_DARK : VIDEO_LIGHT;
+    let videoFile;
+    if (theme === THEME_DARK) {
+      videoFile = VIDEO_DARK;
+    } else if (theme === THEME_WAVE) {
+      videoFile = VIDEO_WAVE;
+    } else {
+      videoFile = VIDEO_LIGHT;
+    }
     return VIDEO_BASE_PATH + videoFile;
   }
 
@@ -63,10 +86,14 @@
       videoElement.src = videoPath;
     }
 
-    // Preload the alternate video for smooth switching
-    const alternateTheme = theme === THEME_DARK ? THEME_LIGHT : THEME_DARK;
-    const alternatePath = getVideoPath(alternateTheme);
-    preloadVideo(alternatePath);
+    // Preload alternate videos for smooth switching
+    const themes = [THEME_LIGHT, THEME_DARK, THEME_WAVE];
+    themes.forEach(altTheme => {
+      if (altTheme !== theme) {
+        const alternatePath = getVideoPath(altTheme);
+        preloadVideo(alternatePath);
+      }
+    });
 
     // Play the video once
     videoElement.play().catch((error) => {

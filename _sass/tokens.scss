@@ -72,13 +72,39 @@ body[a="dark"] {
   --color-link-visited: #C7A6FF;
 }
 
-/* Disable invert filter for dark/auto themes */
-body[a="dark"], body[a="auto"] {
+/* Wave theme override - Vaporwave aesthetic */
+body[a="wave"] {
+  --color-bg: #0a0a0a;
+  --color-text: #ff00ff;
+  --color-muted: #00ffff;
+  --color-border: #ff00ff;
+  --color-link: #00ffff;
+  --color-link-visited: #ff00ff;
+  --focus-ring: 2px solid #00ffff;
+  
+  /* Vaporwave color palette */
+  --wave-pink: #ff00ff;
+  --wave-cyan: #00ffff;
+  --wave-teal: #00ffcc;
+  --wave-purple: #cc00ff;
+  --wave-blue: #0066ff;
+  --wave-yellow: #ffff00;
+  --wave-bg-dark: #0a0a0a;
+  --wave-bg-gradient-start: #0a0a0a;
+  --wave-bg-gradient-end: #1a0033;
+  
+  /* Glow effects */
+  --wave-glow-pink: 0 0 10px rgba(255, 0, 255, 0.8), 0 0 20px rgba(255, 0, 255, 0.6);
+  --wave-glow-cyan: 0 0 10px rgba(0, 255, 255, 0.8), 0 0 20px rgba(0, 255, 255, 0.6);
+}
+
+/* Disable invert filter for dark/auto/wave themes */
+body[a="dark"], body[a="auto"], body[a="wave"] {
   filter: none !important;
 }
-body[a="dark"] img, body[a="auto"] img,
-body[a="dark"] iframe, body[a="auto"] iframe,
-body[a="dark"] .emoji, body[a="auto"] .emoji {
+body[a="dark"] img, body[a="auto"] img, body[a="wave"] img,
+body[a="dark"] iframe, body[a="auto"] iframe, body[a="wave"] iframe,
+body[a="dark"] .emoji, body[a="auto"] .emoji, body[a="wave"] .emoji {
   filter: none !important;
 }
 
@@ -87,6 +113,13 @@ html,
 body {
   background: var(--color-bg) !important;
 }
+
+/* Wave theme gradient background */
+body[a="wave"] {
+  background: linear-gradient(135deg, var(--wave-bg-gradient-start) 0%, var(--wave-bg-gradient-end) 100%) !important;
+  background-attachment: fixed;
+}
+
 body {
   color: var(--color-text) !important;
 }

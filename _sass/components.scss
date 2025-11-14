@@ -19,6 +19,17 @@
   opacity: 0.8;
 }
 
+/* Wave theme toggle styling */
+body[a="wave"] .theme-option.active {
+  text-shadow: var(--wave-glow-pink);
+  color: var(--wave-pink);
+}
+
+body[a="wave"] .theme-option:hover {
+  text-shadow: var(--wave-glow-cyan);
+  color: var(--wave-cyan);
+}
+
 /* Contact form styles */
 .contact-form {
   max-width: 600px;
@@ -83,5 +94,221 @@
 .submit-btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+/* Wave theme visual effects */
+
+/* Glitch animation keyframes */
+@keyframes glitch {
+  0%, 100% {
+    transform: translate(0);
+    filter: hue-rotate(0deg);
+  }
+  20% {
+    transform: translate(-2px, 2px);
+    filter: hue-rotate(90deg);
+  }
+  40% {
+    transform: translate(-2px, -2px);
+    filter: hue-rotate(180deg);
+  }
+  60% {
+    transform: translate(2px, 2px);
+    filter: hue-rotate(270deg);
+  }
+  80% {
+    transform: translate(2px, -2px);
+    filter: hue-rotate(360deg);
+  }
+}
+
+/* Chromatic aberration animation */
+@keyframes chromatic-aberration {
+  0%, 100% {
+    text-shadow: 
+      0 0 5px var(--wave-pink),
+      2px 0 0 var(--wave-cyan),
+      -2px 0 0 var(--wave-purple);
+  }
+  50% {
+    text-shadow: 
+      0 0 5px var(--wave-cyan),
+      -2px 0 0 var(--wave-pink),
+      2px 0 0 var(--wave-purple);
+  }
+}
+
+/* Grid animation */
+@keyframes grid-move {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 50px 50px;
+  }
+}
+
+/* Subtle glitch effect on body - removed transform to prevent layout shift */
+body[a="wave"] {
+  /* Glitch effect removed to prevent layout shifts */
+}
+
+/* Chromatic aberration on headings */
+body[a="wave"] h1,
+body[a="wave"] h2,
+body[a="wave"] h3,
+body[a="wave"] h4,
+body[a="wave"] h5,
+body[a="wave"] h6 {
+  animation: chromatic-aberration 3s ease-in-out infinite;
+  text-shadow: var(--wave-glow-pink);
+}
+
+/* Neon glow on links */
+body[a="wave"] a {
+  text-shadow: var(--wave-glow-cyan);
+  transition: text-shadow 0.3s ease;
+}
+
+body[a="wave"] a:hover {
+  text-shadow: var(--wave-glow-pink);
+}
+
+/* Grid background effect */
+body[a="wave"]::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(var(--wave-cyan) 1px, transparent 1px),
+    linear-gradient(90deg, var(--wave-cyan) 1px, transparent 1px);
+  background-size: 50px 50px;
+  opacity: 0.1;
+  pointer-events: none;
+  z-index: -1;
+  animation: grid-move 20s linear infinite;
+}
+
+/* Windows 95 dialog box wrapper styling for images and videos in wave mode */
+.wave-dialog-wrapper {
+  position: relative;
+  display: inline-block;
+  margin: 0.5rem 0;
+  max-width: 100%;
+}
+
+/* Windows 95 title bar */
+.wave-dialog-titlebar {
+  position: relative;
+  width: 100%;
+  height: 20px;
+  background: #000080; /* Windows 95 blue */
+  color: #fff;
+  font-family: 'Courier New', 'MS Sans Serif', sans-serif;
+  font-size: 11px;
+  line-height: 20px;
+  padding-left: 4px;
+  padding-right: 20px;
+  box-sizing: border-box;
+  border: 1px solid #000;
+  border-bottom: none;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: normal;
+  user-select: none;
+}
+
+/* Windows 95 close button */
+.wave-dialog-close {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 16px;
+  height: 16px;
+  background: #c0c0c0;
+  color: #000;
+  font-family: 'Courier New', 'MS Sans Serif', sans-serif;
+  font-size: 14px;
+  line-height: 16px;
+  text-align: center;
+  border: 1px outset #c0c0c0;
+  box-sizing: border-box;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wave-dialog-close:hover {
+  background: #d4d0c8;
+}
+
+.wave-dialog-close:active {
+  border-style: inset;
+}
+
+/* Windows 95 content area */
+.wave-dialog-content {
+  background: #c0c0c0; /* Windows 95 gray */
+  padding: 2px;
+  border: 1px solid #000;
+  box-shadow: 
+    inset -1px -1px 0 #000,
+    inset 1px 1px 0 #fff,
+    inset -2px -2px 0 #808080,
+    inset 2px 2px 0 #dfdfdf;
+  box-sizing: border-box;
+}
+
+.wave-dialog-content img,
+.wave-dialog-content video {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: contrast(1.2) saturate(1.5);
+  transition: filter 0.3s ease;
+  margin: 0;
+}
+
+.wave-dialog-content img:hover {
+  filter: contrast(1.4) saturate(2) hue-rotate(90deg);
+}
+
+/* Adjust newspaper image wrapper in wave mode to work with Windows 95 dialog */
+body[a="wave"] .newspaper-image-wrapper {
+  border: none;
+  padding: 0;
+  background: transparent;
+}
+
+body[a="wave"] .newspaper-image-wrapper img {
+  margin-top: 20px; /* Account for title bar */
+}
+
+/* Wave effect on newspaper layout */
+body[a="wave"] .newspaper-layout {
+  position: relative;
+}
+
+body[a="wave"] .newspaper-layout::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 0, 255, 0.05) 50%,
+    transparent 100%
+  );
+  pointer-events: none;
+  animation: grid-move 15s linear infinite;
 }
 

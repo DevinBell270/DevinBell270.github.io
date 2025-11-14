@@ -3,6 +3,9 @@
 /* Custom fonts */
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@600&family=Courier+Prime:wght@400;700&display=swap');
 
+/* Japanese font for Wave theme */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap');
+
 /* Base font families */
 body {
   font-family: 'Courier Prime', Courier, monospace;
@@ -38,6 +41,7 @@ code {
 h1 {
   font-size: var(--font-size-display-sm);
   line-height: var(--line-height-display-sm);
+  position: relative;
 }
 
 h2 {
@@ -122,5 +126,52 @@ article p img {
 /* Allow images to break out of paragraph max-width constraint */
 article p:has(img) {
   max-width: none;
+}
+
+/* Wave theme typography enhancements */
+body[a="wave"] {
+  font-family: 'Courier Prime', 'Noto Sans JP', Courier, monospace;
+}
+
+/* Japanese typography styling for decorative elements - subtle and optional */
+body[a="wave"] h1::before {
+  font-family: 'Noto Sans JP', sans-serif;
+  content: 'ヴァーチャル';
+  font-size: 0.2em;
+  display: block;
+  opacity: 0.15;
+  color: var(--wave-cyan);
+  margin-bottom: 0.1em;
+  letter-spacing: 0.3em;
+  font-weight: 400;
+  line-height: 1;
+}
+
+/* Alternative: Add Japanese decorative text via data attribute */
+body[a="wave"] [data-wave-label]::before {
+  font-family: 'Noto Sans JP', sans-serif;
+  content: attr(data-wave-label);
+  display: block;
+  font-size: 0.5em;
+  opacity: 0.4;
+  color: var(--wave-cyan);
+  margin-bottom: 0.3em;
+  letter-spacing: 0.15em;
+  text-shadow: var(--wave-glow-cyan);
+}
+
+/* Enhanced text effects for wave theme */
+body[a="wave"] code,
+body[a="wave"] pre {
+  background: rgba(0, 255, 255, 0.1);
+  border: 1px solid var(--wave-cyan);
+  box-shadow: var(--wave-glow-cyan);
+}
+
+body[a="wave"] blockquote {
+  border-left: 3px solid var(--wave-pink);
+  padding-left: 1rem;
+  color: var(--wave-cyan);
+  text-shadow: var(--wave-glow-cyan);
 }
 

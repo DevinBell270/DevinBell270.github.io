@@ -1,5 +1,5 @@
 /**
- * Theme toggle functionality for light/dark mode switching
+ * Theme toggle functionality for light/dark/wave mode switching
  * Uses localStorage to persist user preference and applies theme via body attribute
  * Compatible with no-style-please theme which uses body[a="dark"] for dark mode
  */
@@ -9,18 +9,23 @@
   // Constants
   const THEME_LIGHT = 'light';
   const THEME_DARK = 'dark';
+  const THEME_WAVE = 'wave';
+  const THEMES = [THEME_LIGHT, THEME_DARK, THEME_WAVE];
   const THEME_STORAGE_KEY = 'theme';
   const THEME_ATTRIBUTE = 'a';
   const LIGHT_BUTTON_ID = 'theme-light';
   const DARK_BUTTON_ID = 'theme-dark';
+  const WAVE_BUTTON_ID = 'theme-wave';
 
   /**
    * Get the current theme from localStorage or return default
-   * @returns {string} Current theme ('light' or 'dark')
+   * @returns {string} Current theme ('light', 'dark', or 'wave')
    */
   function getCurrentTheme() {
     try {
-      return localStorage.getItem(THEME_STORAGE_KEY) || THEME_LIGHT;
+      const theme = localStorage.getItem(THEME_STORAGE_KEY) || THEME_LIGHT;
+      // Validate theme is one of our supported themes
+      return THEMES.includes(theme) ? theme : THEME_LIGHT;
     } catch (e) {
       // localStorage may be unavailable (e.g., private browsing)
       return THEME_LIGHT;
@@ -29,7 +34,7 @@
 
   /**
    * Apply theme to the document body
-   * @param {string} theme - Theme to apply ('light' or 'dark')
+   * @param {string} theme - Theme to apply ('light', 'dark', or 'wave')
    */
   function applyTheme(theme) {
     if (document.body) {
@@ -56,7 +61,7 @@
 
   /**
    * Save theme preference to localStorage
-   * @param {string} theme - Theme to save ('light' or 'dark')
+   * @param {string} theme - Theme to save ('light', 'dark', or 'wave')
    */
   function saveTheme(theme) {
     try {
@@ -69,29 +74,31 @@
 
   /**
    * Update the active state of theme toggle buttons
-   * @param {string} theme - Active theme ('light' or 'dark')
+   * @param {string} theme - Active theme ('light', 'dark', or 'wave')
    */
   function updateActiveTheme(theme) {
     const lightEl = document.getElementById(LIGHT_BUTTON_ID);
     const darkEl = document.getElementById(DARK_BUTTON_ID);
+    const waveEl = document.getElementById(WAVE_BUTTON_ID);
     
-    if (!lightEl || !darkEl) {
-      return;
-    }
+    // Remove active class from all buttons
+    [lightEl, darkEl, waveEl].forEach(el => {
+      if (el) el.classList.remove('active');
+    });
     
-    lightEl.classList.remove('active');
-    darkEl.classList.remove('active');
-    
-    if (theme === THEME_LIGHT) {
+    // Add active class to the current theme button
+    if (theme === THEME_LIGHT && lightEl) {
       lightEl.classList.add('active');
-    } else {
+    } else if (theme === THEME_DARK && darkEl) {
       darkEl.classList.add('active');
+    } else if (theme === THEME_WAVE && waveEl) {
+      waveEl.classList.add('active');
     }
   }
 
   /**
    * Dispatch theme changed event
-   * @param {string} theme - New theme ('light' or 'dark')
+   * @param {string} theme - New theme ('light', 'dark', or 'wave')
    */
   function dispatchThemeChanged(theme) {
     const event = new CustomEvent('themeChanged', {
@@ -102,7 +109,7 @@
 
   /**
    * Handle theme button click
-   * @param {string} theme - Theme to switch to ('light' or 'dark')
+   * @param {string} theme - Theme to switch to ('light', 'dark', or 'wave')
    * @param {Event} e - Click event
    */
   function handleThemeClick(theme, e) {
@@ -123,6 +130,7 @@
     // Cache DOM elements to avoid repeated queries
     const lightButton = document.getElementById(LIGHT_BUTTON_ID);
     const darkButton = document.getElementById(DARK_BUTTON_ID);
+    const waveButton = document.getElementById(WAVE_BUTTON_ID);
     
     // Attach event listeners
     if (lightButton) {
@@ -131,6 +139,10 @@
     
     if (darkButton) {
       darkButton.addEventListener('click', (e) => handleThemeClick(THEME_DARK, e));
+    }
+    
+    if (waveButton) {
+      waveButton.addEventListener('click', (e) => handleThemeClick(THEME_WAVE, e));
     }
   }
 
