@@ -157,7 +157,6 @@ body[a="wave"] [data-wave-label]::before {
   color: var(--wave-cyan);
   margin-bottom: 0.3em;
   letter-spacing: 0.15em;
-  text-shadow: var(--wave-glow-cyan);
 }
 
 /* Enhanced text effects for wave theme */
@@ -165,13 +164,11 @@ body[a="wave"] code,
 body[a="wave"] pre {
   background: rgba(0, 255, 255, 0.1);
   border: 1px solid var(--wave-cyan);
-  box-shadow: var(--wave-glow-cyan);
 }
 
 body[a="wave"] blockquote {
   border-left: 3px solid var(--wave-pink);
   padding-left: 1rem;
   color: var(--wave-cyan);
-  text-shadow: var(--wave-glow-cyan);
 }
 

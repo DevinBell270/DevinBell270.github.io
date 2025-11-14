@@ -21,12 +21,10 @@
 
 /* Wave theme toggle styling */
 body[a="wave"] .theme-option.active {
-  text-shadow: var(--wave-glow-pink);
   color: var(--wave-pink);
 }
 
 body[a="wave"] .theme-option:hover {
-  text-shadow: var(--wave-glow-cyan);
   color: var(--wave-cyan);
 }
 
@@ -126,15 +124,13 @@ body[a="wave"] .theme-option:hover {
 @keyframes chromatic-aberration {
   0%, 100% {
     text-shadow: 
-      0 0 5px var(--wave-pink),
-      2px 0 0 var(--wave-cyan),
-      -2px 0 0 var(--wave-purple);
+      0.5px 0 0 rgba(0, 255, 255, 0.3),
+      -0.5px 0 0 rgba(204, 0, 255, 0.3);
   }
   50% {
     text-shadow: 
-      0 0 5px var(--wave-cyan),
-      -2px 0 0 var(--wave-pink),
-      2px 0 0 var(--wave-purple);
+      -0.5px 0 0 rgba(255, 0, 255, 0.3),
+      0.5px 0 0 rgba(204, 0, 255, 0.3);
   }
 }
 
@@ -161,17 +157,15 @@ body[a="wave"] h4,
 body[a="wave"] h5,
 body[a="wave"] h6 {
   animation: chromatic-aberration 3s ease-in-out infinite;
-  text-shadow: var(--wave-glow-pink);
 }
 
-/* Neon glow on links */
+/* Links styling */
 body[a="wave"] a {
-  text-shadow: var(--wave-glow-cyan);
-  transition: text-shadow 0.3s ease;
+  transition: color 0.3s ease;
 }
 
 body[a="wave"] a:hover {
-  text-shadow: var(--wave-glow-pink);
+  color: var(--wave-pink);
 }
 
 /* Grid background effect */
