@@ -257,6 +257,7 @@ body[a="wave"]::before {
     inset -2px -2px 0 #808080,
     inset 2px 2px 0 #dfdfdf;
   box-sizing: border-box;
+  position: relative;
 }
 
 .wave-dialog-content img,
@@ -267,6 +268,20 @@ body[a="wave"]::before {
   filter: contrast(1.2) saturate(1.5);
   transition: filter 0.3s ease;
   margin: 0;
+}
+
+/* Pink overlay on images in wave mode */
+.wave-dialog-content::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  right: 2px;
+  bottom: 2px;
+  background: rgba(255, 0, 255, 0.25); /* Pink overlay using wave-pink color (#ff00ff) */
+  pointer-events: none;
+  mix-blend-mode: overlay;
+  z-index: 1;
 }
 
 .wave-dialog-content img:hover {
