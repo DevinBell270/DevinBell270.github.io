@@ -25,6 +25,18 @@
   };
 
   /**
+   * Decode HTML entities in a string (e.g., &amp; -> &)
+   * @param {string} text - Text with HTML entities
+   * @returns {string} Decoded text
+   */
+  function decodeHtmlEntities(text) {
+    if (!text) return '';
+    const textarea = document.createElement('textarea');
+    textarea.innerHTML = text;
+    return textarea.value;
+  }
+
+  /**
    * Get cached feed data from localStorage
    * @returns {Array|null} Cached items array or null if cache expired/missing
    */
@@ -80,7 +92,7 @@
       a.href = item.link;
       a.rel = 'noopener noreferrer';
       a.target = '_blank';
-      a.textContent = item.title || 'View video';
+      a.textContent = decodeHtmlEntities(item.title) || 'View video';
       li.appendChild(a);
       list.appendChild(li);
     }
