@@ -41,6 +41,8 @@ When I'm not at the computer, you'll probably find me doing one of a few things:
 You won't catch me on Facebook or Instagram, but you can definitely connect with me in these places:
 
 - GitHub: [DevinBell270](https://github.com/DevinBell270)
+- FISHBRAIN: [Devinbell270](https://fishbrain.com/anglers/Devinbell270)
+- Personal YouTube: [Devin Bell](https://www.youtube.com/@devinbell5430)
 - Disney YouTube: [Bells in Disney](https://www.youtube.com/@bellsindisney)
 
 {% include theme_toggle.html %}
