@@ -33,12 +33,38 @@
   }
 
   /**
+   * Load Noto Sans JP font only when Wave theme is activated
+   * This saves ~58 KiB for users who don't use the Wave theme
+   */
+  function loadWaveFont() {
+    // Check if font is already loaded
+    if (document.getElementById('wave-font-link')) {
+      return;
+    }
+    
+    const link = document.createElement('link');
+    link.id = 'wave-font-link';
+    link.rel = 'stylesheet';
+    link.href = 'https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap';
+    link.media = 'print';
+    link.onload = function() {
+      this.media = 'all';
+    };
+    document.head.appendChild(link);
+  }
+
+  /**
    * Apply theme to the document body
    * @param {string} theme - Theme to apply ('light', 'dark', or 'wave')
    */
   function applyTheme(theme) {
     if (document.body) {
       document.body.setAttribute(THEME_ATTRIBUTE, theme);
+      
+      // Lazy-load Wave font only when Wave theme is activated
+      if (theme === THEME_WAVE) {
+        loadWaveFont();
+      }
     }
   }
 
@@ -57,6 +83,16 @@
       }
     });
     observer.observe(document.documentElement, { childList: true });
+  }
+  
+  // Load Wave font if Wave theme is already active (e.g., on page load)
+  if (currentTheme === THEME_WAVE) {
+    // Use setTimeout to ensure DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', loadWaveFont);
+    } else {
+      loadWaveFont();
+    }
   }
 
   /**
@@ -118,6 +154,11 @@
     saveTheme(theme);
     updateActiveTheme(theme);
     dispatchThemeChanged(theme);
+    
+    // Ensure Wave font is loaded if switching to Wave theme
+    if (theme === THEME_WAVE) {
+      loadWaveFont();
+    }
   }
 
   /**

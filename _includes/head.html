@@ -1,0 +1,43 @@
+<!-- Preconnect to external origins for faster resource loading -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+
+<!-- Load critical fonts asynchronously with font-display: swap -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@600&family=Courier+Prime:wght@400;700&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@600&family=Courier+Prime:wght@400;700&display=swap"></noscript>
+
+<!-- Inline critical script to apply theme immediately and prevent FOUC -->
+<script>
+(function() {
+  'use strict';
+  try {
+    var theme = localStorage.getItem('theme') || 'light';
+    var validThemes = ['light', 'dark', 'wave'];
+    if (!validThemes.includes(theme)) theme = 'light';
+    
+    // Apply theme immediately if body exists, otherwise wait for it
+    function applyTheme(t) {
+      if (document.body) {
+        document.body.setAttribute('a', t);
+      } else {
+        var observer = new MutationObserver(function() {
+          if (document.body) {
+            document.body.setAttribute('a', t);
+            observer.disconnect();
+          }
+        });
+        observer.observe(document.documentElement, { childList: true });
+      }
+    }
+    applyTheme(theme);
+  } catch(e) {
+    // Silently fail if localStorage unavailable
+  }
+})();
+</script>
+
+<!-- Defer KaTeX CSS loading (only loads when needed) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.css" integrity="sha384-OH8qNTHoMMVNVcKdKewlipV4SErXqccxxlg6HC9Cwjr5oZu2AdBej1TndeCirael" crossorigin="anonymous" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.css" integrity="sha384-OH8qNTHoMMVNVcKdKewlipV4SErXqccxxlg6HC9Cwjr5oZu2AdBej1TndeCirael" crossorigin="anonymous"></noscript>
+

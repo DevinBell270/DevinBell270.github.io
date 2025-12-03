@@ -1,10 +1,8 @@
 /* Typography Styles */
 
-/* Custom fonts */
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@600&family=Courier+Prime:wght@400;700&display=swap');
-
-/* Japanese font for Wave theme */
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap');
+/* Custom fonts are now loaded via _includes/head.html with preconnect and preload for better performance */
+/* IBM Plex Mono and Courier Prime are loaded for all users */
+/* Noto Sans JP is lazy-loaded via JavaScript only when Wave theme is activated */
 
 /* Base font families */
 body {
