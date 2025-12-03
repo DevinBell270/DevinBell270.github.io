@@ -11,5 +11,5 @@ This year, we decided to go with a larger 7ft tree and picked the widest one the
 
 ![Christmas tree at Creekside Garden & Nursery]({{ '/assets/images/2025-11-22-real-tree-real-christmas/realtree.webp' | relative_url }})
 
-![Our decorated 7ft Christmas tree]({{ '/assets/images/2025-11-22-real-tree-real-christmas/realtree-detail.jpg' | relative_url }})
+![Our decorated 7ft Christmas tree]({{ '/assets/images/2025-11-22-real-tree-real-christmas/realtree2.jpg' | relative_url }})
 
