@@ -2,7 +2,7 @@
 layout: post
 title: Real Tree Real Christmas
 date: 2025-11-22
-description: A story about picking out this year's Christmas tree at Creekside Garden & Nursery in Smiths Grove.
+description: Picking out this year's Christmas tree at Creekside Garden & Nursery in Smiths Grove.
 ---
 
 It's that time of the year again. Christmas trees are available, so we drove out to Smiths Grove to visit Creekside Garden & Nursery. Creekside has their Christmas trees earlier than anyone else in our area. Since we take our tree down before we leave for Disney during Christmas week, we like to have it up as early as possible.
