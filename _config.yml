@@ -8,6 +8,8 @@ remote_theme: riggraz/no-style-please
 # --- Site Settings ---
 title: Hi, I'm Devin.
 description: No social media, just updates for friends and family.
+url: "https://devinbell.com"
+baseurl: ""
 
 # --- Theme Configuration ---
 # Enable automatic light/dark mode based on user's system preference
