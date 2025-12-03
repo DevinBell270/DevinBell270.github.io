@@ -61,16 +61,32 @@
     return VIDEO_BASE_PATH + videoFile;
   }
 
+  // Track preloaded videos to prevent duplicates
+  const preloadedVideos = new Set();
+
   /**
    * Preload a video for smooth theme switching
    * @param {string} videoPath - Path to video file
    */
   function preloadVideo(videoPath) {
-    const link = document.createElement('link');
-    link.rel = 'preload';
-    link.as = 'video';
-    link.href = videoPath;
-    document.head.appendChild(link);
+    // Skip if already preloaded
+    if (preloadedVideos.has(videoPath)) {
+      return;
+    }
+
+    // Create a hidden video element for preloading
+    const video = document.createElement('video');
+    video.preload = 'auto';
+    video.src = videoPath;
+    video.style.display = 'none';
+    video.muted = true; // Muted helps with autoplay restrictions
+    video.setAttribute('aria-hidden', 'true');
+    
+    // Add to preloaded set
+    preloadedVideos.add(videoPath);
+    
+    // Append to body to trigger loading
+    document.body.appendChild(video);
   }
 
   /**
