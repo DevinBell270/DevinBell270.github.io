@@ -192,6 +192,11 @@
         return;
       }
       
+      // Skip if element is hidden (e.g., preload videos)
+      if (element.style.display === 'none' || element.hidden || element.getAttribute('aria-hidden') === 'true') {
+        return;
+      }
+      
       // Mark as wrapped
       element.classList.add(WRAPPED_CLASS);
       
