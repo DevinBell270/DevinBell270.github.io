@@ -2,6 +2,7 @@
 layout: page
 title: Blog
 permalink: /blog/
+description: Blog posts by Devin Bell - WKU graduate in Bowling Green, Kentucky. Personal updates and stories.
 ---
 
 {% include breadcrumbs.html %}

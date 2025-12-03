@@ -2,6 +2,7 @@
 layout: page
 title: About
 permalink: /about/
+description: About Devin Bell - WKU graduate based in Bowling Green, Kentucky. Originally from Louisville. Contact information and links.
 ---
 
 {% include breadcrumbs.html %}

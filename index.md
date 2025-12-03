@@ -1,5 +1,6 @@
 ---
 layout: home
+description: Devin Bell - WKU graduate living in Bowling Green, Kentucky. Originally from Louisville. Personal blog and updates for friends and family.
 ---
 <div class="home-layout">
   <div class="home-left">
