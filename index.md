@@ -20,7 +20,7 @@ description: Devin Bell - WKU graduate living in Bowling Green, Kentucky. Origin
     </ul>
     <p><a href="{{ '/blog/' | relative_url }}">View more →</a></p>
 
-    <h2>Our Disney & Family Adventures on Youtube</h2>
+    <h2>Our Disney & family adventures on Youtube</h2>
     <ul id="yt-video-list" class="post-list"></ul>
     <p><a href="https://www.youtube.com/@bellsindisney" target="_blank" rel="noopener noreferrer">View more →</a></p>
     <noscript>
