@@ -133,6 +133,11 @@
     videoElement.controls = false;
     videoElement.setAttribute('aria-label', 'Animated image of Devin');
 
+    // Swap poster for high-DPI displays (Retina/2x)
+    if (window.devicePixelRatio >= 2 && videoElement.poster) {
+      videoElement.poster = videoElement.poster.replace('me-1x.webp', 'me-2x.webp');
+    }
+
     /**
      * Handle video ended event - stop on last frame
      */

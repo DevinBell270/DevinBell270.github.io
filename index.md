@@ -34,7 +34,7 @@ description: Devin Bell - WKU graduate living in Bowling Green, Kentucky. Origin
   <div class="home-right">
     <video class="home-img" 
            src="{{ '/assets/images/homepage/me-light.mp4' | relative_url }}"
-           poster="{{ '/assets/images/homepage/me.webp' | relative_url }}"
+           poster="{{ '/assets/images/homepage/me-1x.webp' | relative_url }}"
            fetchpriority="high"
            preload="auto"
            muted 
