@@ -19,6 +19,7 @@
     // Common page headings
     'Recent posts': '最近の投稿',
     'Go To Disney With Us': 'ディズニーへ行こう',
+    'Our Disney & Family Adventures on Youtube': 'ディズニー＆ファミリーアドベンチャー',
     'All posts': 'すべての投稿',
     'Get in Touch': '連絡先',
     'Where to find me': '私を見つける場所',
@@ -32,6 +33,7 @@
     'Ava goes to archery nationals.': 'アヴァはアーチェリーの全国大会へ行く。',
     'I am not a woodworker.': '私は木工職人ではない。',
     'End of the year fishing report.': '年末フィッシングレポート',
+    'Real tree real Christmas': '本物のツリー、本物のクリスマス',
   };
 
   // Common vaporwave terms in katakana/hiragana for fallback

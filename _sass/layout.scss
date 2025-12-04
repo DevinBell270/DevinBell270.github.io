@@ -113,23 +113,18 @@ header {
   }
 }
 
-.newspaper-title-column {
+.newspaper-content-column {
   order: 1;
 }
 
-.newspaper-content-column {
-  order: 2;
-}
-
 .newspaper-images-column {
-  order: 3;
+  order: 2;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
 }
 
 .newspaper-title {
-  white-space: nowrap;
   margin: 0;
   font-size: var(--font-size-display-sm);
   line-height: var(--line-height-display-sm);
@@ -175,55 +170,15 @@ header {
 
 @media (min-width: 1000px) {
   .newspaper-layout {
-    grid-template-columns: auto 1fr 300px;
+    grid-template-columns: 1fr 300px;
     gap: 2rem;
-    /* Break out of .w container to reach viewport edge */
-    margin-left: calc((100vw - 1000px) / 2 * -1);
-    padding-left: calc((100vw - 1000px) / 2);
-    max-width: 100vw;
-  }
-
-  .newspaper-title-column {
-    position: relative;
-    width: 80px;
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-end;
-    padding-top: 0;
-    /* Ensure title column starts at viewport edge */
-    margin-left: calc((100vw - 1000px) / 2 * -1);
-    padding-left: calc((100vw - 1000px) / 2);
   }
 }
 
 @media (min-width: 768px) {
   .newspaper-layout {
-    grid-template-columns: auto 1fr 300px;
+    grid-template-columns: 1fr 300px;
     gap: 2rem;
-  }
-
-  .newspaper-title-column {
-    position: relative;
-    width: 80px;
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-end;
-    padding-top: 0;
-  }
-
-  .newspaper-title {
-    position: sticky;
-    top: 0;
-    transform: rotate(-90deg);
-    transform-origin: right bottom;
-    height: fit-content;
-    width: fit-content;
-    margin-top: 0;
-    padding-top: 0;
-    margin-bottom: 0;
-    padding-bottom: 0;
-    /* Align bottom of rotated text (right edge) with date baseline */
-    /* Rotating around right-bottom keeps the bottom-right corner fixed */
   }
 
   .newspaper-content-column {

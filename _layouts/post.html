@@ -4,11 +4,9 @@ layout: default
 
 {% include breadcrumbs.html %}
 
+<h1 class="newspaper-title">{{ page.title }}</h1>
+
 <div class="newspaper-layout">
-  <div class="newspaper-title-column">
-    <h1 class="newspaper-title">{{ page.title }}</h1>
-  </div>
-  
   <div class="newspaper-content-column">
     <article>
       <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %d, %Y" }}</time>
