@@ -5,12 +5,18 @@
 <title>{{ page.title }} | Devin Bell</title>
 {% endif %}
 
+<!-- Viewport -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
 <!-- Meta Description -->
 {% if page.description %}
 <meta name="description" content="{{ page.description }}">
 {% else %}
 <meta name="description" content="{{ site.description }}">
 {% endif %}
+
+<!-- Content Security Policy -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none';">
 
 <!-- Open Graph Meta Tags -->
 {% if page.url == '/' %}
