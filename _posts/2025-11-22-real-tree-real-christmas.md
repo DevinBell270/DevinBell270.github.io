@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Real Tree Real Christmas
+title: Real tree real Christmas
 date: 2025-11-22
 description: Picking out this year's Christmas tree at Creekside Garden & Nursery in Smiths Grove.
 ---
