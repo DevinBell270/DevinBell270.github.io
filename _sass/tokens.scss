@@ -60,6 +60,15 @@
 
   /* Readable text measure */
   --measure: 65ch;
+
+  /* Homepage info box */
+  --home-info-bg: #ffffff;
+  --home-info-border: #c3cad4;
+  --home-info-header-bg: #98a2b3;
+  --home-info-header-text: #ffffff;
+  --home-info-section: #4b5563;
+  --home-info-label: #111111;
+  --home-info-value: #3b5998;
 }
 
 /* Dark theme override */
@@ -70,6 +79,13 @@ body[a="dark"] {
   --color-border: #7C8793;
   --color-link: #7AB7FF;
   --color-link-visited: #C7A6FF;
+  --home-info-bg: #181b21;
+  --home-info-border: #566171;
+  --home-info-header-bg: #4f5d73;
+  --home-info-header-text: #f3f4f6;
+  --home-info-section: #cbd5e1;
+  --home-info-label: #e5e7eb;
+  --home-info-value: #93c5fd;
 }
 
 /* Wave theme override - Vaporwave aesthetic */
@@ -96,6 +112,13 @@ body[a="wave"] {
   /* Glow effects */
   --wave-glow-pink: 0 0 10px rgba(255, 0, 255, 0.8), 0 0 20px rgba(255, 0, 255, 0.6);
   --wave-glow-cyan: 0 0 10px rgba(0, 255, 255, 0.8), 0 0 20px rgba(0, 255, 255, 0.6);
+  --home-info-bg: rgba(8, 0, 24, 0.88);
+  --home-info-border: var(--wave-cyan);
+  --home-info-header-bg: rgba(255, 0, 255, 0.75);
+  --home-info-header-text: #ffffff;
+  --home-info-section: var(--wave-cyan);
+  --home-info-label: #ffe6ff;
+  --home-info-value: var(--wave-yellow);
 }
 
 /* Disable invert filter for dark/auto/wave themes */

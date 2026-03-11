@@ -40,6 +40,33 @@ description: Devin Bell - WKU graduate living in Bowling Green, Kentucky. Origin
            muted 
            playsinline 
            alt="Animated image of Devin"></video>
+    <section class="home-info-box" aria-labelledby="home-info-box-title">
+      <div class="home-info-box__header" id="home-info-box-title">Information</div>
+
+      <div class="home-info-box__grid">
+        <h3 class="home-info-box__section">Account Info</h3>
+        <div class="home-info-box__label">Name:</div>
+        <div class="home-info-box__value home-info-box__value--link">Devin Bell</div>
+        <div class="home-info-box__label">Member Since:</div>
+        <div class="home-info-box__value home-info-box__value--link">Feb 14, 2025</div>
+
+        <h3 class="home-info-box__section">Basic Info</h3>
+        <div class="home-info-box__label">Birthday:</div>
+        <div class="home-info-box__value home-info-box__value--link">04/17/1987</div>
+        <div class="home-info-box__label">Sex:</div>
+        <div class="home-info-box__value home-info-box__value--link">Male</div>
+        <div class="home-info-box__label">Home Town:</div>
+        <div class="home-info-box__value home-info-box__value--link">Louisville, Ky</div>
+        <div class="home-info-box__label">High School:</div>
+        <div class="home-info-box__value home-info-box__value--link">Fern Creek High School</div>
+
+        <h3 class="home-info-box__section">Personal Info</h3>
+        <div class="home-info-box__label">Relationship Status:</div>
+        <div class="home-info-box__value home-info-box__value--link">Married to Lacey Bell</div>
+        <div class="home-info-box__label">Interest:</div>
+        <div class="home-info-box__value home-info-box__value--link">Fishing, Disney, Weight Lifting, Vibe Coding</div>
+      </div>
+    </section>
   </div>
 </div>
 
