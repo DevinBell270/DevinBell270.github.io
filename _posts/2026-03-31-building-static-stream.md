@@ -20,3 +20,5 @@ The only real snag I had to handle manually was the YouTube API. The initial bui
 I still have a lot of UI/UX work ahead of me to get it looking and feeling right, but the core concept is alive and kicking. Best of all, it's already available for anyone who wants to use it. You can grab the code on [my GitHub](https://github.com/DevinBell270/Static-Stream).
 
 And of course, it is completely free and open source.
+
+![Static Stream]({{ '/assets/images/2026-03-31-building-static-stream/static.webp' | relative_url }})
