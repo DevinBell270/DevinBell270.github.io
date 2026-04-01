@@ -9,7 +9,7 @@ Recently, we took a trip down to Pigeon Forge for our very first family visit to
 
 Dollywood has two main hotels: DreamMore Resort and Spa, and HeartSong Lodge. We really identify with the rustic Smoky Mountain cabin feel, so we decided to stay at HeartSong Lodge. Overall, the resort is fantastic. HeartSong is on the level of any Deluxe Disney resort in terms of theming and atmosphere.
 
-The lobby was way more bustling than we thought it would be. And that feeling was improved even more with the live music performer, Anna Lee, playing country music.
+The lobby was way more bustling than we thought it would be. And that feeling was improved even more with the live music performer, Anna Lea, playing country music.
 
 We went with a cheaper room category and got a King Room with a sleeper sofa since we just needed something compact but functional for the three of us. Ava absolutely loved the sofa bed, which is something we can’t say about the sofa sleepers at Disney. The space is beautifully themed, though the bathroom is a little tight if everyone is trying to get ready at once.
 
@@ -22,3 +22,7 @@ If we had to offer one major critique, it would be the ride operations. Loading 
 We ended up getting season passes, and we are so excited to head back to Dollywood a couple more times this year. And we are really looking forward to the new ride, Nightflight Expedition, opening.
 
 If you want to see our full day and review, check out [our video](https://www.youtube.com/watch?v=s1wd2QuIroE).
+
+![Our Family at the entrance of Dollywood]({{ '/assets/images/2026-03-31-first-family-visit-to-dollywood/dolly.webp' | relative_url }})
+
+![Ava and I getting ready to ride the Big Bear Mountain Coaster]({{ '/assets/images/2026-03-31-first-family-visit-to-dollywood/dolly2.webp' | relative_url }})
