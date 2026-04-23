@@ -10,6 +10,7 @@ title: Hi, I'm Devin.
 description: Devin Bell - WKU graduate living in Bowling Green, Kentucky. Originally from Louisville. Personal blog and updates.
 url: "https://devinbell.com"
 baseurl: ""
+timezone: America/Chicago
 
 # --- Theme Configuration ---
 # Enable automatic light/dark mode based on user's system preference
