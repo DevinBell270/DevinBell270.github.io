@@ -9,6 +9,26 @@ description: Devin Bell - WKU graduate living in Bowling Green, Kentucky. Origin
     <p>Please see the <a href="{{ '/about/' | relative_url }}">About</a> page for more information and contact details.</p>
     <p>GitHub: <a href="https://github.com/DevinBell270">DevinBell270</a></p>
 
+    <h2>Recent statuses</h2>
+    {% assign recent_statuses = site.statuses | sort: 'date' | reverse %}
+    {% if recent_statuses.size == 0 %}
+      <p>No status updates yet.</p>
+    {% else %}
+    <ul class="status-feed">
+    {% for status in recent_statuses limit:5 %}
+      <li class="status-feed__item">
+        <time class="status-feed__time" datetime="{{ status.date | date_to_xmlschema }}">
+          {{ status.date | date: "%b %d, %Y · %l:%M %p" | strip }}
+        </time>
+        <div class="status-feed__body">
+          {{ status.content | markdownify }}
+        </div>
+      </li>
+    {% endfor %}
+    </ul>
+    <p><a href="{{ '/status/' | relative_url }}">View all statuses →</a></p>
+    {% endif %}
+
     <h2>Recent posts</h2>
     <ul class="post-list">
     {% for post in site.posts limit:3 %}
