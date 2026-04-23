@@ -131,7 +131,7 @@
 
     // Ensure video has no controls
     videoElement.controls = false;
-    videoElement.setAttribute('aria-label', 'Animated image of Devin');
+    videoElement.setAttribute('aria-label', 'Animated portrait of Devin Bell. No audio.');
 
     // Swap poster for high-DPI displays (Retina/2x)
     if (window.devicePixelRatio >= 2 && videoElement.poster) {

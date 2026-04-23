@@ -60,9 +60,17 @@ description: Devin Bell - WKU graduate living in Bowling Green, Kentucky. Origin
            preload="auto"
            muted 
            playsinline 
-           alt="Animated image of Devin"></video>
+           aria-describedby="home-video-description">
+      <track
+        kind="captions"
+        srclang="en"
+        src="{{ '/assets/captions/homepage-animation.vtt' | relative_url }}"
+        label="Homepage video captions">
+      Your browser does not support the homepage video.
+    </video>
+    <p class="sr-only" id="home-video-description">Animated portrait of Devin Bell. No audio.</p>
     <section class="home-info-box" aria-labelledby="home-info-box-title">
-      <div class="home-info-box__header" id="home-info-box-title">Information</div>
+      <h2 class="home-info-box__header" id="home-info-box-title">Information</h2>
 
       <div class="home-info-box__grid">
         <h3 class="home-info-box__section">Account Info</h3>
