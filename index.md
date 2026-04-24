@@ -30,19 +30,23 @@ description: Devin Bell - WKU graduate living in Bowling Green, Kentucky. Origin
     {% endif %}
 
     <h2>Recent posts</h2>
-    <ul class="post-list">
+    <ul class="feed-list">
     {% for post in site.posts limit:3 %}
-      <li>
-        <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-        <span> — {{ post.date | date: "%b %d, %Y" }}</span>
-        {% if post.description %}<div class="desc">{{ post.description }}</div>{% endif %}
+      <li class="feed-list__item">
+        <time class="feed-list__meta" datetime="{{ post.date | date_to_xmlschema }}">
+          {{ post.date | date: "%b %d, %Y" }}
+        </time>
+        <div class="feed-list__body">
+          <p class="feed-list__title"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></p>
+          {% if post.description %}<p class="feed-list__description">{{ post.description }}</p>{% endif %}
+        </div>
       </li>
     {% endfor %}
     </ul>
     <p><a href="{{ '/blog/' | relative_url }}">View more →</a></p>
 
     <h2>Our Disney & family adventures on Youtube</h2>
-    <ul id="yt-video-list" class="post-list"></ul>
+    <ul id="yt-video-list" class="feed-list"></ul>
     <p><a href="https://www.youtube.com/@bellsindisney" target="_blank" rel="noopener noreferrer">View more →</a></p>
     <noscript>
       <p>Enable JavaScript to see our latest YouTube videos.</p>

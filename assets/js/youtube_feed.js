@@ -37,6 +37,24 @@
   }
 
   /**
+   * Format a published date for display in the feed.
+   * @param {string} value - ISO or RFC date string
+   * @returns {string} Human-readable date or empty string
+   */
+  function formatPublishedDate(value) {
+    if (!value) return '';
+
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return '';
+
+    return new Intl.DateTimeFormat('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric'
+    }).format(date);
+  }
+
+  /**
    * Get cached feed data from localStorage
    * @returns {Array|null} Cached items array or null if cache expired/missing
    */
@@ -71,7 +89,7 @@
 
   /**
    * Render video items to the DOM
-   * @param {Array} items - Array of video items with title and link properties
+   * @param {Array} items - Array of video items with title, link, and published properties
    */
   function renderItems(items) {
     const list = document.getElementById(LIST_ELEMENT_ID);
@@ -81,6 +99,7 @@
     
     if (!items.length) {
       const li = document.createElement('li');
+      li.className = 'feed-list__item';
       li.textContent = ERROR_MESSAGES.NO_VIDEOS;
       list.appendChild(li);
       return;
@@ -88,12 +107,34 @@
     
     for (const item of items) {
       const li = document.createElement('li');
+      li.className = 'feed-list__item';
+
+      if (item.published) {
+        const time = document.createElement('time');
+        time.className = 'feed-list__meta';
+        time.dateTime = item.published;
+        time.textContent = formatPublishedDate(item.published);
+
+        if (time.textContent) {
+          li.appendChild(time);
+        }
+      }
+
+      const body = document.createElement('div');
+      body.className = 'feed-list__body';
+
+      const title = document.createElement('p');
+      title.className = 'feed-list__title';
+
       const a = document.createElement('a');
       a.href = item.link;
       a.rel = 'noopener noreferrer';
       a.target = '_blank';
       a.textContent = decodeHtmlEntities(item.title) || 'View video';
-      li.appendChild(a);
+
+      title.appendChild(a);
+      body.appendChild(title);
+      li.appendChild(body);
       list.appendChild(li);
     }
   }
@@ -101,7 +142,7 @@
   /**
    * Parse YouTube RSS feed XML and extract video entries
    * @param {string} xmlText - Raw XML text from YouTube feed
-   * @returns {Array} Array of video items with title and link
+   * @returns {Array} Array of video items with title, link, and published date
    */
   function parseYouTubeFeed(xmlText) {
     if (!xmlText || !xmlText.includes('<feed')) {
@@ -119,9 +160,11 @@
     return entries.slice(0, MAX_ITEMS).map((entry) => {
       const titleEl = entry.getElementsByTagName('title')[0];
       const linkEl = entry.getElementsByTagName('link')[0];
+      const publishedEl = entry.getElementsByTagName('published')[0];
       return {
         title: titleEl ? (titleEl.textContent || '').trim() : '',
-        link: linkEl ? linkEl.getAttribute('href') : ''
+        link: linkEl ? linkEl.getAttribute('href') : '',
+        published: publishedEl ? (publishedEl.textContent || '').trim() : ''
       };
     });
   }
@@ -152,7 +195,7 @@
 
   /**
    * Fetch YouTube feed using RSS2JSON API with proxy fallback
-   * @returns {Promise<Array>} Array of video items with title and link
+   * @returns {Promise<Array>} Array of video items with title, link, and published date
    * @throws {Error} If all fetch methods fail
    */
   async function fetchFeed() {
@@ -177,7 +220,8 @@
       
       return data.items.slice(0, MAX_ITEMS).map((item) => ({
         title: item.title || '',
-        link: item.link || ''
+        link: item.link || '',
+        published: item.pubDate || ''
       }));
     } catch (err) {
       // Fallback to proxy services
@@ -207,6 +251,7 @@
       // Only show error if we don't have cached data
       if (!cachedItems) {
         const li = document.createElement('li');
+            li.className = 'feed-list__item';
         li.textContent = ERROR_MESSAGES.UNABLE_TO_LOAD;
         list.appendChild(li);
       }

@@ -103,6 +103,16 @@ pre { overflow: auto; padding: 0.75rem; }
   color: var(--color-muted);
 }
 
+.feed-list__title {
+  margin: 0;
+}
+
+.feed-list__description {
+  margin-top: 0.25rem;
+  font-size: 0.9em;
+  color: var(--color-muted);
+}
+
 /* Image defaults */
 img {
   max-width: 100%;
