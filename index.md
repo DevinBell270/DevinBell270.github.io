@@ -5,9 +5,11 @@ description: Devin Bell - WKU graduate living in Bowling Green, Kentucky. Origin
 <div class="home-layout">
   <div class="home-left">
     <p>I'm no longer active on most social media platforms. I've set up this simple site as a way for friends and family to see what I'm up to and get in touch.</p>
-
-    <p>Please see the <a href="{{ '/about/' | relative_url }}">About</a> page for more information and contact details.</p>
-    <p>GitHub: <a href="https://github.com/DevinBell270">DevinBell270</a></p>
+    <ul>
+    <li>GitHub: <a href="https://github.com/DevinBell270">DevinBell270</a></li>
+    <li>FISHBRAIN: <a href="https://fishbrain.com/anglers/Devinbell">Devinbell270</a></li>
+    <li>Personal YouTube: <a href="https://www.youtube.com/@devinbell270">Devinbell270</a></li>
+    </ul>
 
     <h2>Recent statuses</h2>
     {% assign recent_statuses = site.statuses | sort: 'date' | reverse %}
