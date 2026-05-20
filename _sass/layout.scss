@@ -170,11 +170,6 @@ header {
   align-items: center;
   text-decoration: none;
   color: var(--home-info-value);
-  transition: transform 0.15s ease;
-}
-
-.home-top8__friend:hover {
-  transform: translateY(-2px);
 }
 
 .home-top8__friend:visited {
