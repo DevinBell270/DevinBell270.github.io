@@ -104,11 +104,15 @@ description: Devin Bell - WKU graduate living in Bowling Green, Kentucky. Origin
     </section>
     <section class="home-top8" aria-labelledby="home-top8-title">
       <h2 class="home-top8__header" id="home-top8-title">The Homies</h2>
-      <p class="home-top8__subtitle">Devin has <strong>1</strong> Homie.</p>
+      <p class="home-top8__subtitle">Devin has <strong>2</strong> Homies.</p>
       <div class="home-top8__grid">
         <a href="https://krizdingus.com/" class="home-top8__friend" target="_blank" rel="noopener noreferrer">
           <img src="{{ '/assets/images/homies/krizdingus.jpg' | relative_url }}" alt="Kriz Dingus" class="home-top8__avatar" loading="lazy" width="100" height="100">
           <span class="home-top8__name">Kriz Dingus</span>
+        </a>
+        <a href="https://www.petehalupka.com/" class="home-top8__friend" target="_blank" rel="noopener noreferrer">
+          <img src="{{ '/assets/images/homies/pete.jpg' | relative_url }}" alt="Pete Halupka" class="home-top8__avatar" loading="lazy" width="100" height="100">
+          <span class="home-top8__name">Pete Halupka</span>
         </a>
       </div>
     </section>
