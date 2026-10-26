@@ -40,3 +40,16 @@ collections:
 
 # --- Build Settings ---
 markdown: kramdown
+
+# `exclude` replaces Jekyll's defaults, so the defaults stay listed here.
+# `scripts` is the local status composer and is not part of the public site.
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - CNAME
+  - scripts

@@ -1,0 +1,23 @@
+<li class="status-feed__item">
+  <time class="status-feed__time" datetime="{{ status.date | date_to_xmlschema }}">
+    {{ status.date | date: "%b %d, %Y · %l:%M %p" | strip }}
+  </time>
+  <div class="status-feed__body">
+    {{ status.content | markdownify }}
+    {% if status.photos and status.photos.size > 0 %}
+    <div class="status-feed__photos">
+      {% for photo in status.photos %}
+      {% if photo.src %}
+      <img
+        class="status-feed__photo"
+        src="{{ photo.src | relative_url }}"
+        alt="{{ photo.alt | default: 'Photo' | escape }}"
+        {% if photo.width and photo.height %}width="{{ photo.width }}" height="{{ photo.height }}"{% endif %}
+        loading="lazy"
+        decoding="async">
+      {% endif %}
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+</li>

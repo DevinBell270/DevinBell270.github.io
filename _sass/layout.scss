@@ -264,6 +264,39 @@ header {
   margin-bottom: 0;
 }
 
+.status-feed__photos {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.status-feed__body>.status-feed__photos {
+  margin-top: 0.5rem;
+}
+
+.status-feed__body>.status-feed__photos:first-child {
+  margin-top: 0;
+}
+
+.status-feed__body img {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  margin: 0.5rem 0 0;
+  border: 1px solid var(--color-border);
+  background: #fff;
+}
+
+.status-feed__photos img {
+  margin: 0;
+}
+
+.status-feed__body .wave-dialog-wrapper {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+}
+
 /* Newspaper Editorial Layout */
 .newspaper-layout {
   display: grid;

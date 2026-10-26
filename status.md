@@ -16,14 +16,7 @@ description: Short status updates from Devin Bell.
 {% else %}
 <ul class="status-feed">
 {% for status in statuses %}
-  <li class="status-feed__item">
-    <time class="status-feed__time" datetime="{{ status.date | date_to_xmlschema }}">
-      {{ status.date | date: "%b %d, %Y · %l:%M %p" | strip }}
-    </time>
-    <div class="status-feed__body">
-      {{ status.content | markdownify }}
-    </div>
-  </li>
+  {% include status_item.html %}
 {% endfor %}
 </ul>
 {% endif %}

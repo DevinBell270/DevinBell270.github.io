@@ -18,14 +18,7 @@ description: Devin Bell - WKU graduate living in Bowling Green, Kentucky. Origin
     {% else %}
     <ul class="status-feed">
     {% for status in recent_statuses limit:5 %}
-      <li class="status-feed__item">
-        <time class="status-feed__time" datetime="{{ status.date | date_to_xmlschema }}">
-          {{ status.date | date: "%b %d, %Y · %l:%M %p" | strip }}
-        </time>
-        <div class="status-feed__body">
-          {{ status.content | markdownify }}
-        </div>
-      </li>
+      {% include status_item.html %}
     {% endfor %}
     </ul>
     <p><a href="{{ '/status/' | relative_url }}">View all statuses →</a></p>

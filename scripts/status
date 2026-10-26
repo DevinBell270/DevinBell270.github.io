@@ -1,0 +1,461 @@
+#!/usr/bin/env python3
+"""Post a status. Photos are converted to black-and-white halftone.
+
+    ./scripts/status
+    ./scripts/status "Out on the lake" ~/Desktop/fish.jpg
+"""
+
+from __future__ import annotations
+
+import argparse
+import base64
+import io
+import json
+import math
+import shutil
+import subprocess
+import sys
+import tempfile
+import threading
+import traceback
+import webbrowser
+from datetime import datetime
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from pathlib import Path
+from urllib.parse import unquote, urlparse
+
+try:
+    from PIL import Image, ImageDraw, ImageOps
+except ImportError:
+    sys.stderr.write("This needs Pillow. Install it with:\n  python3 -m pip install pillow\n")
+    raise SystemExit(1)
+
+ROOT = Path(__file__).resolve().parent.parent
+STATUSES = ROOT / "_statuses"
+IMAGES = ROOT / "assets" / "images" / "statuses"
+PAGE_PATH = Path(__file__).resolve().parent / "composer.html"
+
+MAX_EDGE = 1100
+TARGET_DOTS = 300
+MIN_CELL = 3
+INK_GAMMA = 1.75
+# Eight grays. Halftone dots are high-contrast, so a lossy photo encode
+# gets larger and softens them. A short ramp keeps the edges smooth.
+GRAY_LEVELS = 8
+MAX_PHOTOS = 6
+MAX_UPLOAD = 48 * 1024 * 1024
+MAX_PHOTO = 30 * 1024 * 1024
+ALLOWED_SUFFIXES = {
+    ".jpg",
+    ".jpeg",
+    ".png",
+    ".webp",
+    ".gif",
+    ".heic",
+    ".heif",
+    ".tif",
+    ".tiff",
+    ".bmp",
+}
+
+RESAMPLE = Image.Resampling.LANCZOS if hasattr(Image, "Resampling") else Image.LANCZOS
+BOX = Image.Resampling.BOX if hasattr(Image, "Resampling") else Image.BOX
+LOCK = threading.Lock()
+
+
+def to_gray(im: Image.Image) -> Image.Image:
+    im = ImageOps.exif_transpose(im)
+    if im.mode == "P" and "transparency" in im.info:
+        im = im.convert("RGBA")
+    if im.mode in ("RGBA", "LA"):
+        rgba = im.convert("RGBA")
+        background = Image.new("RGBA", rgba.size, (255, 255, 255, 255))
+        im = Image.alpha_composite(background, rgba)
+    return im.convert("L")
+
+
+def draw_halftone(gray: Image.Image) -> Image.Image:
+    """Round black dots on white. Dot area follows darkness, at a 45 degree screen."""
+    width, height = gray.size
+    cell = max(MIN_CELL, round(max(width, height) / TARGET_DOTS))
+    sample = gray.resize(
+        (max(1, round(width / cell)), max(1, round(height / cell))),
+        BOX,
+    )
+    pixels = sample.load()
+    scale = 2
+    canvas = Image.new("L", (width * scale, height * scale), 255)
+    draw = ImageDraw.Draw(canvas)
+    angle = math.radians(45)
+    cosine, sine = math.cos(angle), math.sin(angle)
+    max_radius = cell * math.sqrt(2) / 2
+
+    def cell_index(x: float, y: float) -> tuple[float, float]:
+        return (
+            (x * cosine + y * sine) / cell,
+            (-x * sine + y * cosine) / cell,
+        )
+
+    corners = [cell_index(x, y) for x, y in ((0, 0), (width, 0), (0, height), (width, height))]
+    pad = 2
+    i_start = math.floor(min(point[0] for point in corners)) - pad
+    i_end = math.ceil(max(point[0] for point in corners)) + pad
+    j_start = math.floor(min(point[1] for point in corners)) - pad
+    j_end = math.ceil(max(point[1] for point in corners)) + pad
+
+    for i in range(i_start, i_end + 1):
+        for j in range(j_start, j_end + 1):
+            x = (i * cosine - j * sine) * cell
+            y = (i * sine + j * cosine) * cell
+            if x < -cell or y < -cell or x >= width + cell or y >= height + cell:
+                continue
+            sample_x = min(sample.width - 1, max(0, int(min(max(x, 0), width - 1) / width * sample.width)))
+            sample_y = min(sample.height - 1, max(0, int(min(max(y, 0), height - 1) / height * sample.height)))
+            darkness = (1 - pixels[sample_x, sample_y] / 255) ** INK_GAMMA
+            if darkness < 0.012:
+                continue
+            radius = max_radius * math.sqrt(darkness) * scale
+            cx, cy = x * scale, y * scale
+            draw.ellipse((cx - radius, cy - radius, cx + radius, cy + radius), fill=0)
+
+    return canvas.resize((width, height), RESAMPLE)
+
+
+def render_halftone(im: Image.Image) -> Image.Image:
+    gray = to_gray(im)
+    if gray.width < 1 or gray.height < 1:
+        raise ValueError("That photo is empty.")
+    gray.thumbnail((MAX_EDGE, MAX_EDGE), RESAMPLE)
+    return draw_halftone(gray)
+
+
+def load_image(path: Path) -> Image.Image:
+    try:
+        with Image.open(path) as im:
+            im.seek(0)
+            return im.copy()
+    except Image.DecompressionBombError as exc:
+        raise ValueError("That photo is too large.") from exc
+
+
+def open_image_path(path: Path) -> Image.Image:
+    try:
+        return load_image(path)
+    except ValueError:
+        raise
+    except Exception:
+        if shutil.which("sips") is None:
+            raise ValueError("Could not read that photo. Try a JPEG, PNG, WebP, or HEIC file.")
+        jpeg = Path(str(path) + ".jpg")
+        try:
+            result = subprocess.run(
+                ["sips", "-s", "format", "jpeg", str(path), "--out", str(jpeg)],
+                capture_output=True,
+                check=False,
+            )
+            if result.returncode != 0 or not jpeg.exists():
+                raise ValueError("Could not read that photo. Try a JPEG, PNG, WebP, or HEIC file.")
+            return load_image(jpeg)
+        finally:
+            jpeg.unlink(missing_ok=True)
+
+
+def open_image_bytes(data: bytes, suffix: str) -> Image.Image:
+    if not data:
+        raise ValueError("That photo is empty.")
+    if len(data) > MAX_PHOTO:
+        raise ValueError("That photo is larger than 30MB.")
+    temp = tempfile.NamedTemporaryFile(suffix=suffix, delete=False)
+    path = Path(temp.name)
+    try:
+        temp.write(data)
+        temp.close()
+        return open_image_path(path)
+    finally:
+        path.unlink(missing_ok=True)
+
+
+def suffix_from_name(name: str) -> str:
+    cleaned = "".join(ch for ch in unquote(name or "") if ch.isalnum() or ch in "._-")
+    suffix = Path(cleaned).suffix.lower()
+    if suffix in ALLOWED_SUFFIXES:
+        return suffix
+    return ".img"
+
+
+def alt_text(message: str) -> str:
+    collapsed = " ".join(message.split())
+    if not collapsed:
+        return "Photo"
+    if len(collapsed) > 180:
+        return collapsed[:177].rstrip() + "..."
+    return collapsed
+
+
+def yaml_quote(value: str) -> str:
+    escaped = (
+        value.replace("\\", "\\\\")
+        .replace('"', '\\"')
+        .replace("\n", "\\n")
+        .replace("\r", "\\r")
+        .replace("\t", "\\t")
+    )
+    return f'"{escaped}"'
+
+
+def allocate_paths(now: datetime) -> tuple[Path, str]:
+    base = now.strftime("%Y-%m-%d %H-%M-%S")
+    stamp = now.strftime("%Y-%m-%d-%H%M%S")
+    extra = ""
+    for number in range(2, 51):
+        status_path = STATUSES / f"{base}{extra}-status.md"
+        image_stamp = f"{stamp}{extra}"
+        taken = status_path.exists() or any(IMAGES.glob(f"{image_stamp}.webp")) or any(
+            IMAGES.glob(f"{image_stamp}-*.webp")
+        )
+        if not taken:
+            return status_path, image_stamp
+        extra = f"-{number}"
+    raise ValueError("Could not find a free name for this status.")
+
+
+def render_markdown(now: datetime, message: str, photos: list[dict]) -> str:
+    lines = ["---", f"date: {now.strftime('%Y-%m-%d %H:%M:%S %z')}"]
+    if photos:
+        lines.append("photos:")
+        for photo in photos:
+            lines.append(f"  - src: {photo['src']}")
+            lines.append(f"    alt: {yaml_quote(photo['alt'])}")
+            lines.append(f"    width: {photo['width']}")
+            lines.append(f"    height: {photo['height']}")
+    lines.append("---")
+    body = f"{message}\n" if message else ""
+    return "\n".join(lines) + "\n" + body
+
+
+def create_status(message: str, images: list[Image.Image]) -> list[str]:
+    with LOCK:
+        message = message.replace("\r\n", "\n").replace("\r", "\n").strip()
+        if not message and not images:
+            raise ValueError("Write a status or add a photo.")
+        STATUSES.mkdir(exist_ok=True)
+        IMAGES.mkdir(parents=True, exist_ok=True)
+        now = datetime.now().astimezone()
+        status_path, stamp = allocate_paths(now)
+        caption = alt_text(message)
+        written: list[Path] = []
+        photos = []
+        try:
+            for index, image in enumerate(images, start=1):
+                name = f"{stamp}.webp" if len(images) == 1 else f"{stamp}-{index}.webp"
+                path = IMAGES / name
+                write_webp(image, path)
+                written.append(path)
+                photos.append(
+                    {
+                        "src": "/" + path.relative_to(ROOT).as_posix(),
+                        "alt": caption,
+                        "width": image.width,
+                        "height": image.height,
+                    }
+                )
+            status_path.write_text(render_markdown(now, message, photos), encoding="utf-8")
+            written.append(status_path)
+        except Exception:
+            for path in written:
+                path.unlink(missing_ok=True)
+            raise
+        ordered = [status_path, *[path for path in written if path != status_path]]
+        return [str(path.relative_to(ROOT)) for path in ordered]
+
+
+def read_status_payload(raw: bytes) -> tuple[str, list[dict]]:
+    try:
+        payload = json.loads(raw.decode("utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise ValueError("Could not read that status.") from exc
+    if not isinstance(payload, dict):
+        raise ValueError("Could not read that status.")
+    message = payload.get("message", "")
+    photos = payload.get("photos", [])
+    if not isinstance(message, str) or not isinstance(photos, list):
+        raise ValueError("Could not read that status.")
+    if len(message) > 5000:
+        raise ValueError("That status is too long.")
+    if len(photos) > MAX_PHOTOS:
+        raise ValueError("You can attach up to 6 photos.")
+    cleaned = []
+    for photo in photos:
+        if not isinstance(photo, dict):
+            raise ValueError("Could not read one of the photos.")
+        data = photo.get("data", "")
+        name = photo.get("name", "")
+        if not isinstance(data, str) or not data or not isinstance(name, str):
+            raise ValueError("Could not read one of the photos.")
+        try:
+            blob = base64.b64decode(data, validate=True)
+        except Exception as exc:
+            raise ValueError("Could not read one of the photos.") from exc
+        cleaned.append({"name": name, "blob": blob})
+    if not message.strip() and not cleaned:
+        raise ValueError("Write a status or add a photo.")
+    return message, cleaned
+
+
+class Handler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        path = urlparse(self.path).path
+        if path == "/favicon.ico":
+            self.send_response(204)
+            self.end_headers()
+            return
+        if path != "/":
+            self.send_error(404)
+            return
+        if not PAGE_PATH.is_file():
+            self._send_json(500, {"error": "The composer page is missing."})
+            return
+        self._send(200, "text/html; charset=utf-8", PAGE_PATH.read_bytes())
+
+    def do_POST(self):
+        path = urlparse(self.path).path
+        try:
+            length = int(self.headers.get("Content-Length", "0") or "0")
+        except ValueError:
+            self._send_json(400, {"error": "Could not read that upload."})
+            return
+        if length < 0 or length > MAX_UPLOAD:
+            self._send_json(413, {"error": "That upload is too large."})
+            return
+        raw = self.rfile.read(length)
+        try:
+            if path == "/api/halftone":
+                image = render_halftone(open_image_bytes(raw, suffix_from_name(self.headers.get("X-Filename", ""))))
+                self._send(200, "image/webp", webp_bytes(image))
+                return
+            if path == "/api/status":
+                message, photos = read_status_payload(raw)
+                images = [
+                    render_halftone(open_image_bytes(photo["blob"], suffix_from_name(photo["name"])))
+                    for photo in photos
+                ]
+                self._send_json(200, {"files": create_status(message, images)})
+                return
+            self.send_error(404)
+        except ValueError as exc:
+            self._send_json(400, {"error": str(exc)})
+        except Exception:
+            traceback.print_exc()
+            self._send_json(500, {"error": "Could not save that status."})
+
+    def _send(self, code: int, content_type: str, body: bytes):
+        try:
+            self.send_response(code)
+            self.send_header("Content-Type", content_type)
+            self.send_header("Content-Length", str(len(body)))
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers()
+            self.wfile.write(body)
+        except (BrokenPipeError, ConnectionResetError):
+            return
+
+    def _send_json(self, code: int, payload: dict):
+        self._send(code, "application/json; charset=utf-8", json.dumps(payload).encode("utf-8"))
+
+
+def write_webp(image: Image.Image, target) -> None:
+    gray = image if image.mode == "L" else image.convert("L")
+    step = 255 / (GRAY_LEVELS - 1)
+    levels = [min(255, int(round(round(value / step) * step))) for value in range(256)]
+    gray.point(levels).save(target, format="WEBP", lossless=True, quality=100, method=4)
+
+
+def webp_bytes(image: Image.Image) -> bytes:
+    buffer = io.BytesIO()
+    write_webp(image, buffer)
+    return buffer.getvalue()
+
+
+def serve(port: int, open_browser: bool) -> None:
+    if not PAGE_PATH.is_file():
+        raise SystemExit(f"Missing {PAGE_PATH}")
+    server = None
+    for candidate in range(port, port + 20):
+        try:
+            server = ThreadingHTTPServer(("127.0.0.1", candidate), Handler)
+            break
+        except OSError:
+            continue
+    if server is None:
+        raise SystemExit(f"No open port from {port} to {port + 19}.")
+    url = f"http://127.0.0.1:{server.server_address[1]}/"
+    print(f"Status composer: {url}")
+    print("Press Ctrl+C to stop.")
+    if open_browser:
+        webbrowser.open(url)
+    try:
+        server.serve_forever()
+    except KeyboardInterrupt:
+        print("\nStopped.")
+    finally:
+        server.server_close()
+
+
+def looks_like_path(word: str) -> bool:
+    if word.startswith(("/", "./", "../", "~")):
+        return True
+    if any(char.isspace() for char in word):
+        return False
+    return Path(word).suffix.lower() in ALLOWED_SUFFIXES
+
+
+def parse_positionals(words: list[str]) -> tuple[str | None, list[Path]]:
+    if not words:
+        return None, []
+    if all(Path(word).is_file() for word in words):
+        return "", [Path(word) for word in words]
+    missing = [word for word in words if not Path(word).is_file() and looks_like_path(word)]
+    if missing:
+        raise SystemExit(f"Could not find {missing[0]}")
+    if Path(words[0]).is_file():
+        raise SystemExit(f"Could not find {next(word for word in words if not Path(word).is_file())}")
+    missing = [word for word in words[1:] if not Path(word).is_file()]
+    if missing:
+        raise SystemExit(f"Could not find {missing[0]}")
+    return words[0], [Path(word) for word in words[1:]]
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(
+        description="Post a status. Photos are converted to black-and-white halftone.",
+    )
+    parser.add_argument(
+        "words",
+        nargs="*",
+        help='Status text and photos. Example: ./scripts/status "Out on the lake" fish.jpg',
+    )
+    parser.add_argument("--port", type=int, default=4731)
+    parser.add_argument("--no-open", action="store_true", help="Do not open a browser.")
+    args = parser.parse_args(argv)
+    message, photos = parse_positionals(args.words)
+    if message is None and not photos:
+        serve(args.port, open_browser=not args.no_open)
+        return 0
+    try:
+        images = []
+        for photo in photos:
+            print(f"Converting {photo.name}...")
+            images.append(render_halftone(open_image_path(photo)))
+        files = create_status(message or "", images)
+    except ValueError as exc:
+        print(exc, file=sys.stderr)
+        return 1
+    print("Saved:")
+    for file in files:
+        print(f"  {file}")
+    print("Commit and push when you want this on the site.")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
